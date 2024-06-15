@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 6668137037211482009}
-  spawnLoc: {fileID: 0}
+  bird: {fileID: 0}
+  birdControls: {fileID: 0}
   moveSpeed: 0.01
+  speedMult: 1.001
   spawnX: 60
   spawnY: -2
   spawnZ: 5

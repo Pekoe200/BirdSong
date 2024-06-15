@@ -100,10 +100,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 3526184904039184172}
   spawnLoc: {fileID: 0}
-  moveSpeed: 0.001
+  bird: {fileID: 0}
+  birdControls: {fileID: 0}
+  moveSpeed: 0.02
+  speedMult: 1.001
   spawnX: 60
-  spawnY: 60
-  spawnZ: 6
+  spawnY: 8
+  spawnZ: 16
 --- !u!64 &5029404640567908805
 MeshCollider:
   m_ObjectHideFlags: 0
