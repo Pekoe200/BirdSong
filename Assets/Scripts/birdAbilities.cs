@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class birdAbilities : MonoBehaviour
 {
-    Rigidbody2D mRigidbody;
+    private Rigidbody2D mRigidbody;
+    private Animator mAnimator;
     public float fallX; // X position for falling vertically
     public float fallY; // Y position for falling vertically
     public float fallDelay; // Delay for the flight/wait coroutine
@@ -13,23 +14,27 @@ public class birdAbilities : MonoBehaviour
     public bool flight = false; // Bool to check if flight was triggered
 
 
-    public bool abilityActive = false;
-    private Animator mAnimator;
+    public bool abilityActive = false;   
 
-
-    // Assigns the rigidbody for the bird so it can be controlled.
+    // Set the rigidbody and animator
     void Start(){
         mRigidbody = GetComponent<Rigidbody2D>();
-        mAnimator = GetComponent<Animator>();
-        
+        mAnimator = GetComponent<Animator>();        
     }
 
     void Update(){
-        // Press space bar to start bunny hop into dive
-        if(Input.GetKey(KeyCode.Space) && flight == false){
-            mRigidbody.velocity = new Vector2(5,5);
-            StartCoroutine(WaitCoroutine(fallDelay));    
+        if(mRigidbody != null){
+            // Press space bar to initiate dive
+            if(Input.GetKey(KeyCode.Space) && flight == false){
+                flight = true;
+                SetActive();
+                mAnimator.SetTrigger("StartDive");
+                Diving();
+                //mRigidbody.velocity = new Vector2(5,5);
+                //StartCoroutine(WaitCoroutine(fallDelay));    
+            }
         }
+        
         // Holding space keeps bird in a dive and calculates downward velocity
         if(Input.GetKey(KeyCode.Space) && flight == true){
             mRigidbody.velocity = new Vector2(fallX,fallY);
@@ -40,10 +45,25 @@ public class birdAbilities : MonoBehaviour
             Flight(diveVel);
         }
         if(mAnimator != null){
-            if(Input.GetKeyDown(KeyCode.B) && abilityActive == false){
-                setActive();
+            if(Input.GetKeyDown(KeyCode.DownArrow) && abilityActive == false){
+                SetActive();
+                mAnimator.SetTrigger("Loop");
+                SetInactive();
+            }
+            if(Input.GetKeyDown(KeyCode.UpArrow) && abilityActive == false){
+                SetActive();
                 mAnimator.SetTrigger("Corkscrew");
-                setInactive();
+                SetInactive();
+            }
+            if(Input.GetKeyDown(KeyCode.LeftArrow) && abilityActive == false){
+                SetActive();
+                mAnimator.SetTrigger("BankLeft");
+                SetInactive();
+            }
+            if(Input.GetKeyDown(KeyCode.RightArrow) && abilityActive == false){
+                SetActive();
+                mAnimator.SetTrigger("BankRight");
+                SetInactive();
             }
         }           
     }
@@ -57,11 +77,15 @@ public class birdAbilities : MonoBehaviour
         flight = false;
     }
 
-    void setActive(){
+    void Diving(){
+        mAnimator.SetTrigger("Diving");
+    }
+
+    void SetActive(){
         abilityActive = true;
     }
 
-    void setInactive(){
+    void SetInactive(){
         abilityActive = false;
     }
 
