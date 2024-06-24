@@ -8,8 +8,7 @@ public class cameraScript : MonoBehaviour
     private Vector3 offset;
 
     void Start()    {
-        offset = transform.position - bird.transform.position;
-        
+        offset = transform.position - bird.transform.position;        
     }
 
     void LateUpdate()
