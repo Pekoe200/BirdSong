@@ -555,13 +555,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804446948}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0820025, y: -0, z: -0, w: 0.99663216}
-  m_LocalPosition: {x: -32.27, y: 11.51, z: -50}
+  m_LocalRotation: {x: 0.026176924, y: 0, z: 0, w: 0.99965733}
+  m_LocalPosition: {x: -32.27, y: 11.51, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 9.407, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3, y: 0, z: 0}
 --- !u!114 &804446952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,6 +575,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bird: {fileID: 150475207}
+  minFOV: 60
+  midFOV: 70
+  maxFOV: 80
+  lowSpeedThreshold: 5
+  highSpeedThreshold: 15
+  smoothSpeed: 0.5
 --- !u!1 &825560355
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,9 +754,9 @@ Canvas:
   m_GameObject: {fileID: 895735459}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 804446950}
+  m_PlaneDistance: 5
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -1480,7 +1486,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 100
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1518,7 +1524,7 @@ PrefabInstance:
       objectReference: {fileID: 1787478076}
     - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: jumpChargeRate
-      value: 15
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: initialGlideSpeed

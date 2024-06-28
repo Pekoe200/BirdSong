@@ -11,7 +11,6 @@ public class birdControlsNew : MonoBehaviour
     public float maxJumpForce = 30f;
     public float jumpChargeRate = 15f;
     public float maxStamina = 100f; // Maximum stamina value
-    public float staminaDepletionRate = 10f; // Stamina depleted per unit jump force
     public float initialGlideSpeed = 15; // Initial speed when starting to glide
     public float tiltDownSpeedIncrease = 30f; // Maximum speed when tilting down
     public float tiltUpSpeedDecrease = 10f; // Minimum speed when tilting up
@@ -25,7 +24,6 @@ public class birdControlsNew : MonoBehaviour
     private bool isGliding = false;
     private bool isStalling = false; // Added isStalling variable
     private float tiltAngle = 0f; // Current tilt angle
-    private float stallTimer = 0f; // Timer for stalling
 
     public Slider staminaSlider; // Reference to the UI Slider for stamina
 
@@ -82,11 +80,11 @@ public class birdControlsNew : MonoBehaviour
                 currentJumpForce = Mathf.Clamp(currentJumpForce, jumpForce, maxJumpForce);
 
                 // Deplete stamina proportionally to the increase in jump force
-                float staminaToDeplete = (forceIncrease / maxJumpForce) * maxStamina;
+                float staminaToDeplete = forceIncrease;
                 currentStamina -= staminaToDeplete;
                 currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
 
-                Debug.Log("Charging jump. Current jump force: " + currentJumpForce);
+                Debug.Log("Charging jump. Current jump force: " + currentJumpForce + ", Stamina: " + currentStamina);
             }
 
             // If stamina depletes to zero during the charge, apply the jump force immediately
@@ -134,6 +132,7 @@ public class birdControlsNew : MonoBehaviour
         float tiltInput = Input.GetAxis("Horizontal"); // Get input from A/D keys
         tiltAngle += tiltInput * Time.deltaTime * 100f; // Adjust tilt angle based on input
         tiltAngle = Mathf.Clamp(tiltAngle, -maxTiltAngle, maxTiltAngle); // Clamp tilt angle
+        mRigidbody.drag = 0;
 
         // Rotate the bird based on tilt angle
         transform.rotation = Quaternion.Euler(0, 0, -tiltAngle);
@@ -147,6 +146,11 @@ public class birdControlsNew : MonoBehaviour
                 isGliding = true;
                 mRigidbody.useGravity = false; // Turn off gravity
                 Debug.Log("Resuming glide state.");
+            }
+            else
+            {
+                // Continue falling with gravity
+                mRigidbody.velocity = new Vector3(stallForwardSpeed, mRigidbody.velocity.y, 0);
             }
         }
         else
@@ -172,8 +176,8 @@ public class birdControlsNew : MonoBehaviour
                     isGliding = false;
                     isStalling = true;
                     mRigidbody.useGravity = true; // Turn on gravity
+                    mRigidbody.drag = 60; // Added high drag to simulate immediate fall
                     Debug.Log("Stalled. Falling.");
-                    stallTimer = 0f; // Reset stall timer
                     return;
                 }
             }
@@ -191,6 +195,7 @@ public class birdControlsNew : MonoBehaviour
     }
 
 
+
     void UpdateStaminaUI()
     {
         staminaSlider.value = currentStamina; // Update the stamina slider value
@@ -204,6 +209,7 @@ public class birdControlsNew : MonoBehaviour
             isGrounded = true;
             isGliding = false;
             isStalling = false; // Reset isStalling when landing
+            mRigidbody.drag = 0;
             tiltAngle = 0f; // Reset tilt angle when landing
             transform.rotation = Quaternion.Euler(0, 0, 0); // Reset rotation when landing
             Debug.Log("Landed on ground.");
