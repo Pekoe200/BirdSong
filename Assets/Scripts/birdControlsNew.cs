@@ -8,22 +8,22 @@ public class birdControlsNew : MonoBehaviour
     private Rigidbody mRigidbody;
     public float walkSpeed = 5f;
     public float jumpForce = 5f;
-    public float maxJumpForce = 15f;
-    public float jumpChargeRate = 10f;
+    public float maxJumpForce = 30f;
+    public float jumpChargeRate = 15f;
     public float maxStamina = 100f; // Maximum stamina value
-    public float staminaDepletionRate = 1f; // Stamina depleted per unit jump force
-    public float initialGlideSpeed = 20f; // Initial speed when starting to glide
+    public float staminaDepletionRate = 10f; // Stamina depleted per unit jump force
+    public float initialGlideSpeed = 15; // Initial speed when starting to glide
     public float tiltDownSpeedIncrease = 30f; // Maximum speed when tilting down
     public float tiltUpSpeedDecrease = 10f; // Minimum speed when tilting up
     public float tiltUpHeightGain = 5f; // Altitude gained when tilting up
     public float stallSpeed = 10f; // Speed threshold below which the bird stalls
-    public float maxTiltAngle = 90f; // Maximum tilt angle before stalling
-    public float stallTime = 2f; // Time before stalling when pitched up above 90 degrees
-    public float stallForwardSpeed = 3f; // Forward speed during stall
+    public float maxTiltAngle = 30f; // Maximum tilt angle before stalling
+    public float stallForwardSpeed = 5f; // Forward speed during stall
     private float currentStamina;
     private float currentJumpForce;
     private bool isGrounded = true;
     private bool isGliding = false;
+    private bool isStalling = false; // Added isStalling variable
     private float tiltAngle = 0f; // Current tilt angle
     private float stallTimer = 0f; // Timer for stalling
 
@@ -49,7 +49,7 @@ public class birdControlsNew : MonoBehaviour
             HandleWalking();
             HandleJumping();
         }
-        else if (isGliding)
+        else if (isGliding || isStalling)
         {
             HandleGliding();
         }
@@ -62,6 +62,7 @@ public class birdControlsNew : MonoBehaviour
 
     void HandleWalking()
     {
+        mRigidbody.useGravity = true; // Ensure gravity is on
         float move = Input.GetAxis("Horizontal"); // Get input from A/D keys or Left/Right Arrow keys
         Vector3 moveDirection = new Vector3(move, 0, 0); // Move in the x direction
         mRigidbody.velocity = new Vector3(moveDirection.x * walkSpeed, mRigidbody.velocity.y, mRigidbody.velocity.z);
@@ -70,37 +71,57 @@ public class birdControlsNew : MonoBehaviour
 
     void HandleJumping()
     {
+        // Check if the jump key is being held down and stamina is available
         if (Input.GetKey(KeyCode.Space) && currentStamina > 0)
         {
             // Increase the jump force while holding down the jump key, but stop if max jump force is reached
             if (currentJumpForce < maxJumpForce)
             {
-                currentJumpForce += jumpChargeRate * Time.deltaTime;
+                float forceIncrease = jumpChargeRate * Time.deltaTime;
+                currentJumpForce += forceIncrease;
                 currentJumpForce = Mathf.Clamp(currentJumpForce, jumpForce, maxJumpForce);
 
-                // Deplete stamina correspondingly
-                float staminaToDeplete = staminaDepletionRate * Time.deltaTime;
+                // Deplete stamina proportionally to the increase in jump force
+                float staminaToDeplete = (forceIncrease / maxJumpForce) * maxStamina;
                 currentStamina -= staminaToDeplete;
                 currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
 
                 Debug.Log("Charging jump. Current jump force: " + currentJumpForce);
             }
+
+            // If stamina depletes to zero during the charge, apply the jump force immediately
+            if (currentStamina == 0)
+            {
+                ApplyJumpForce();
+                Debug.Log("Stamina depleted. Jumping with force: " + currentJumpForce);
+            }
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) && currentStamina > 0)
+        // Check if the jump key is released and there is some stamina left
+        if (Input.GetKeyUp(KeyCode.Space) && currentJumpForce > jumpForce)
         {
-            // Apply the jump force when the jump key is released
-            mRigidbody.velocity = new Vector3(mRigidbody.velocity.x, currentJumpForce, mRigidbody.velocity.z);
-            isGrounded = false;
-            currentJumpForce = jumpForce; // Reset the jump force
+            ApplyJumpForce();
             Debug.Log("Jumping with force: " + currentJumpForce);
         }
+
+        // Ensure jump cannot be initiated if stamina is zero at the start
+        if (Input.GetKey(KeyCode.Space) && currentStamina <= 0)
+        {
+            Debug.Log("Cannot initiate jump. Stamina depleted.");
+        }
+    }
+
+    void ApplyJumpForce()
+    {
+        mRigidbody.velocity = new Vector3(mRigidbody.velocity.x, currentJumpForce, mRigidbody.velocity.z);
+        isGrounded = false;
+        currentJumpForce = jumpForce; // Reset the jump force
     }
 
     void CheckForGlide()
     {
-        // Check if the bird is descending (peak height reached)
-        if (mRigidbody.velocity.y <= 0)
+        // Check if the bird is descending (peak height reached) and not already gliding or stalling
+        if (mRigidbody.velocity.y <= 0 && !isGliding && !isStalling)
         {
             isGliding = true;
             mRigidbody.velocity = transform.forward * initialGlideSpeed; // Start gliding with initial speed
@@ -111,37 +132,64 @@ public class birdControlsNew : MonoBehaviour
     void HandleGliding()
     {
         float tiltInput = Input.GetAxis("Horizontal"); // Get input from A/D keys
-        tiltAngle += tiltInput * Time.deltaTime * 50f; // Adjust tilt angle based on input
+        tiltAngle += tiltInput * Time.deltaTime * 100f; // Adjust tilt angle based on input
         tiltAngle = Mathf.Clamp(tiltAngle, -maxTiltAngle, maxTiltAngle); // Clamp tilt angle
 
         // Rotate the bird based on tilt angle
         transform.rotation = Quaternion.Euler(0, 0, -tiltAngle);
 
-        // Calculate speed based on tilt angle
-        float forwardSpeed = Mathf.Lerp(tiltUpSpeedDecrease, tiltDownSpeedIncrease, (tiltAngle + maxTiltAngle) / (2 * maxTiltAngle));
-
-        // Set the velocity based on tilt angle
-        mRigidbody.velocity = transform.right * forwardSpeed;
-
-        // Check for stalling
-        if (tiltAngle < 0)
+        if (isStalling)
         {
-            stallTimer += Time.deltaTime;
-            if (stallTimer >= stallTime)
+            // If stalling, check if the tilt angle is greater than or equal to 0 to resume gliding
+            if (tiltAngle >= 0)
             {
-                isGliding = false;
-                mRigidbody.velocity = new Vector3(stallForwardSpeed, -Mathf.Abs(mRigidbody.velocity.y), 0); // Stall and start falling
-                Debug.Log("Stalled. Falling.");
-                stallTimer = 0f; // Reset stall timer
+                isStalling = false;
+                isGliding = true;
+                mRigidbody.useGravity = false; // Turn off gravity
+                Debug.Log("Resuming glide state.");
             }
         }
         else
         {
-            stallTimer = 0f; // Reset stall timer if not tilting up
-        }
+            float forwardSpeed = mRigidbody.velocity.magnitude; // Current forward speed
 
-        Debug.Log("Gliding. Tilt angle: " + tiltAngle + ", Speed: " + forwardSpeed);
+            if (tiltAngle > 0)
+            {
+                // Accelerate while diving
+                forwardSpeed += (tiltAngle / maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
+                // Clamp forward speed to the maximum value
+                forwardSpeed = Mathf.Min(forwardSpeed, 40f);
+            }
+            else if (tiltAngle < 0)
+            {
+                // Decelerate while climbing
+                // NOTE: An arbitrary 2 is added to the mult here as a deceleration factor.
+                forwardSpeed -= (tiltAngle / -maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
+
+                // Trigger stall if speed drops to half of the default flight speed
+                if (forwardSpeed <= initialGlideSpeed / 2)
+                {
+                    isGliding = false;
+                    isStalling = true;
+                    mRigidbody.useGravity = true; // Turn on gravity
+                    Debug.Log("Stalled. Falling.");
+                    stallTimer = 0f; // Reset stall timer
+                    return;
+                }
+            }
+            else
+            {
+                // Maintain default glide speed if angle is near parallel
+                forwardSpeed = Mathf.Lerp(forwardSpeed, initialGlideSpeed, Time.deltaTime);
+            }
+
+            // Set the velocity based on calculated forward speed
+            mRigidbody.velocity = transform.right * forwardSpeed;
+
+            Debug.Log("Gliding. Tilt angle: " + tiltAngle + ", Speed: " + forwardSpeed);
+        }
     }
+
 
     void UpdateStaminaUI()
     {
@@ -155,6 +203,7 @@ public class birdControlsNew : MonoBehaviour
         {
             isGrounded = true;
             isGliding = false;
+            isStalling = false; // Reset isStalling when landing
             tiltAngle = 0f; // Reset tilt angle when landing
             transform.rotation = Quaternion.Euler(0, 0, 0); // Reset rotation when landing
             Debug.Log("Landed on ground.");
@@ -168,6 +217,7 @@ public class birdControlsNew : MonoBehaviour
         {
             isGrounded = true;
             isGliding = false;
+            isStalling = false; // Reset isStalling when staying on ground
             Debug.Log("Staying on ground.");
         }
     }
