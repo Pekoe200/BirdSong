@@ -84,6 +84,12 @@ public class birdControlsNew : MonoBehaviour
                 currentStamina -= staminaToDeplete;
                 currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
 
+                // Shake the camera with intensity proportional to the jump force
+                modCamera.Instance.ShakeCamera(currentJumpForce/maxJumpForce);
+
+                // Change the FOV with intensity proportional to the jump force
+                modCamera.Instance.ZoomCamera(currentJumpForce/maxJumpForce);
+
                 Debug.Log("Charging jump. Current jump force: " + currentJumpForce + ", Stamina: " + currentStamina);
             }
 
@@ -91,6 +97,8 @@ public class birdControlsNew : MonoBehaviour
             if (currentStamina == 0)
             {
                 ApplyJumpForce();
+                modCamera.Instance.ShakeCamera(0f);
+                modCamera.Instance.ZoomCamera(0f);
                 Debug.Log("Stamina depleted. Jumping with force: " + currentJumpForce);
             }
         }
@@ -99,6 +107,8 @@ public class birdControlsNew : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space) && currentJumpForce > jumpForce)
         {
             ApplyJumpForce();
+            modCamera.Instance.ShakeCamera(0f);
+            modCamera.Instance.ZoomCamera(0f);
             Debug.Log("Jumping with force: " + currentJumpForce);
         }
 
