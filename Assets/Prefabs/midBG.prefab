@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 17.58, y: -4.67, z: 5}
-  m_LocalScale: {x: 1.5568, y: 1.5568, z: 1.5568}
+  m_LocalScale: {x: 2, y: 1.5568, z: 2.1446476}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 6668137037211482009}
-  spawnLoc: {fileID: 0}
+  bird: {fileID: 0}
+  birdControls: {fileID: 0}
   moveSpeed: 0.01
+  speedMult: 1.001
   spawnX: 60
   spawnY: -2
   spawnZ: 5

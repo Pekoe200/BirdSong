@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -8.4, z: -4.5}
-  m_LocalScale: {x: 2, y: 1.5568, z: 1.5568}
+  m_LocalScale: {x: 2, y: 11.335372, z: 1.5568}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8053066189440422509}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &8529017379388395115
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 8053066189440422509}
-  spawnLoc: {fileID: 0}
+  bird: {fileID: 0}
+  birdControls: {fileID: 0}
   moveSpeed: 0.01
+  speedMult: 1.001
   spawnX: 60
   spawnY: -7
   spawnZ: -4.5
@@ -125,7 +127,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &8573980926766482846
 Rigidbody:
   m_ObjectHideFlags: 0
