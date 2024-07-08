@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 0, z: -40}
+  m_FollowOffset: {x: 10, y: 6, z: -20}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -351,7 +351,7 @@ Transform:
   m_GameObject: {fileID: 405358967}
   serializedVersion: 2
   m_LocalRotation: {x: -0.036300566, y: -0.00027253793, z: 0.0000136974395, w: -0.9993409}
-  m_LocalPosition: {x: -40.4, y: 5.54, z: -40}
+  m_LocalPosition: {x: -30.400002, y: 11.54, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -370,8 +370,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a775ff7201e7040990f1c62d3313be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bird: {fileID: 150475207}
   baseFOV: 60
   deltaFOV: 10
+  minFOV: 60
+  midFOV: 70
+  maxFOV: 80
+  lowSpeedThreshold: 5
+  highSpeedThreshold: 20
+  smoothSpeed: 2
+--- !u!1 &415019576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 415019577}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &415019577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415019576}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -38.93081, y: 0.97386265, z: 74.96858}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &438687688
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.509434, g: 0.3354253, b: 0.12255251, a: 1}
+  m_Color: {r: 0.94509804, g: 0.827451, b: 0.78039217, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -734,7 +772,7 @@ Transform:
   m_GameObject: {fileID: 804446948}
   serializedVersion: 2
   m_LocalRotation: {x: -0.036300566, y: -0.00027253793, z: 0.0000136974395, w: -0.9993409}
-  m_LocalPosition: {x: -40.4, y: 5.54, z: -40}
+  m_LocalPosition: {x: -30.400002, y: 11.54, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -758,7 +796,7 @@ MonoBehaviour:
   maxFOV: 80
   lowSpeedThreshold: 5
   highSpeedThreshold: 15
-  smoothSpeed: 0.5
+  smoothSpeed: 2
 --- !u!114 &804446953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1393,7 +1431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.027192257, g: 0.764151, b: 0, a: 1}
+  m_Color: {r: 0.8584906, g: 0.49450508, b: 0.36040404, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1638,7 +1676,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787478074}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1648,7 +1686,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -527.2, y: -220.4}
+  m_AnchoredPosition: {x: -677, y: -265}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787478076
@@ -1698,7 +1736,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 47.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1724,7 +1762,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: maxJumpForce
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: maxTiltAngle
@@ -1929,3 +1967,4 @@ SceneRoots:
   - {fileID: 1856965744}
   - {fileID: 895735463}
   - {fileID: 405358969}
+  - {fileID: 415019577}

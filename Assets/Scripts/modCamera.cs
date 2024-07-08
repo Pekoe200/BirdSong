@@ -54,23 +54,28 @@ public class modCamera : MonoBehaviour
     public void ZoomCamera(float force)
     {
         targetFOV = baseFOV - (force * deltaFOV);
+        Debug.Log("Shaking with force: " + targetFOV);
     }
 
     private void UpdateCameraFOVBasedOnSpeed()
     {
         float birdSpeed = bird.GetComponent<Rigidbody>().velocity.magnitude;
 
-        if (birdSpeed > highSpeedThreshold)
-        {
-            targetFOV = maxFOV;
+        if(birdSpeed > 0){
+            if (birdSpeed > highSpeedThreshold)
+                {
+                    targetFOV = maxFOV;
+                }
+                else if (birdSpeed > lowSpeedThreshold)
+                {
+                    targetFOV = midFOV;
+                }
+                else
+                {
+                    targetFOV = minFOV;
+                }
         }
-        else if (birdSpeed > lowSpeedThreshold)
-        {
-            targetFOV = midFOV;
-        }
-        else
-        {
-            targetFOV = minFOV;
-        }
+        
+        
     }
 }

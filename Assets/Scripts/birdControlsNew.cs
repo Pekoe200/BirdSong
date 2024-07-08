@@ -64,7 +64,7 @@ public class birdControlsNew : MonoBehaviour
         float move = Input.GetAxis("Horizontal"); // Get input from A/D keys or Left/Right Arrow keys
         Vector3 moveDirection = new Vector3(move, 0, 0); // Move in the x direction
         mRigidbody.velocity = new Vector3(moveDirection.x * walkSpeed, mRigidbody.velocity.y, mRigidbody.velocity.z);
-        Debug.Log("Walking. Move direction: " + moveDirection);
+        // Debug.Log("Walking. Move direction: " + moveDirection);
     }
 
     void HandleJumping()
@@ -86,7 +86,7 @@ public class birdControlsNew : MonoBehaviour
 
                 // Shake the camera with intensity proportional to the jump force
                 modCamera.Instance.ShakeCamera(currentJumpForce/maxJumpForce);
-
+ 
                 // Change the FOV with intensity proportional to the jump force
                 modCamera.Instance.ZoomCamera(currentJumpForce/maxJumpForce);
 
@@ -101,6 +101,11 @@ public class birdControlsNew : MonoBehaviour
                 modCamera.Instance.ZoomCamera(0f);
                 Debug.Log("Stamina depleted. Jumping with force: " + currentJumpForce);
             }
+
+            // If bird attempts to move, cancel the jump
+             
+
+
         }
 
         // Check if the jump key is released and there is some stamina left
@@ -228,7 +233,7 @@ public class birdControlsNew : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
-        Debug.Log("OnCollisionStay with: " + collision.gameObject.name);
+        // Debug.Log("OnCollisionStay with: " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Ground") && !isGrounded)
         {
             isGrounded = true;
