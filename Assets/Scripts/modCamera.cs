@@ -59,7 +59,7 @@ public class modCamera : MonoBehaviour
 
     private void UpdateCameraFOVBasedOnSpeed()
     {
-        float birdSpeed = bird.GetComponent<Rigidbody>().velocity.magnitude;
+        float birdSpeed = bird.GetComponent<Rigidbody2D>().velocity.magnitude;
 
         if(birdSpeed > 0){
             if (birdSpeed > highSpeedThreshold)
