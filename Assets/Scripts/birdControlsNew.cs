@@ -23,6 +23,8 @@ public class birdControlsNew : MonoBehaviour
     private bool isGrounded = true;
     private bool isGliding = false;
     private bool isStalling = false; // Added isStalling variable
+    private bool isFacingRight = true;
+    private bool isCharging = false;
     private float tiltAngle = 0f; // Current tilt angle
 
     public Slider staminaSlider; // Reference to the UI Slider for stamina
@@ -63,8 +65,30 @@ public class birdControlsNew : MonoBehaviour
         mRigidbody2D.gravityScale = 1; // Ensure gravity is on
         float move = Input.GetAxis("Horizontal"); // Get input from A/D keys or Left/Right Arrow keys
         Vector2 moveDirection = new Vector2(move, 0); // Move in the x direction
-        mRigidbody2D.velocity = new Vector2(moveDirection.x * walkSpeed, mRigidbody2D.velocity.y);
-        // Debug.Log("Walking. Move direction: " + moveDirection);
+
+        if (!isCharging)
+        {
+            mRigidbody2D.velocity = new Vector2(moveDirection.x * walkSpeed, mRigidbody2D.velocity.y);
+        }
+        // Flip character based on walking direction
+        if (move > 0 && !isFacingRight)
+        {
+            Flip();
+        }
+        if (move < 0 && isFacingRight)
+        {
+            Flip();
+        }
+
+        Debug.Log("Walking. Move direction: " + move);
+    }
+
+    void Flip()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+        isFacingRight = !isFacingRight;
     }
 
     void HandleJumping()
@@ -75,6 +99,8 @@ public class birdControlsNew : MonoBehaviour
             // Increase the jump force while holding down the jump key, but stop if max jump force is reached
             if (currentJumpForce < maxJumpForce)
             {
+                isCharging = !isCharging;
+                mRigidbody2D.velocity = new Vector2(0, 0);
                 float forceIncrease = jumpChargeRate * Time.deltaTime;
                 currentJumpForce += forceIncrease;
                 currentJumpForce = Mathf.Clamp(currentJumpForce, jumpForce, maxJumpForce);
@@ -96,9 +122,7 @@ public class birdControlsNew : MonoBehaviour
             // If stamina depletes to zero during the charge, apply the jump force immediately
             if (currentStamina == 0)
             {
-                ApplyJumpForce();
-                modCamera.Instance.ShakeCamera(0f);
-                modCamera.Instance.ZoomCamera(0f);
+                ApplyJumpForce();            
                 Debug.Log("Stamina depleted. Jumping with force: " + currentJumpForce);
             }
 
@@ -109,8 +133,6 @@ public class birdControlsNew : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space) && currentJumpForce > jumpForce)
         {
             ApplyJumpForce();
-            modCamera.Instance.ShakeCamera(0f);
-            modCamera.Instance.ZoomCamera(0f);
             Debug.Log("Jumping with force: " + currentJumpForce);
         }
 
@@ -123,6 +145,9 @@ public class birdControlsNew : MonoBehaviour
 
     void ApplyJumpForce()
     {
+        modCamera.Instance.ShakeCamera(0f);
+        modCamera.Instance.ZoomCamera(0f);
+        isCharging = !isCharging;
         mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, currentJumpForce);
         isGrounded = false;
         currentJumpForce = jumpForce; // Reset the jump force
@@ -141,7 +166,7 @@ public class birdControlsNew : MonoBehaviour
 
     void HandleGliding()
     {
-        float tiltInput = Input.GetAxis("Horizontal"); // Get input from A/D keys
+        float tiltInput = Input.GetAxis("Horizontal"); // Get input from A/D keys or Left/Right Arrow keys
         tiltAngle += tiltInput * Time.deltaTime * 100f; // Adjust tilt angle based on input
         tiltAngle = Mathf.Clamp(tiltAngle, -maxTiltAngle, maxTiltAngle); // Clamp tilt angle
         mRigidbody2D.drag = 0;
@@ -152,7 +177,7 @@ public class birdControlsNew : MonoBehaviour
         if (isStalling)
         {
             // If stalling, check if the tilt angle is greater than or equal to 0 to resume gliding
-            if (tiltAngle >= 0)
+            if ((tiltAngle >= 0 && isFacingRight) || (tiltAngle <= 0 && !isFacingRight))
             {
                 isStalling = false;
                 isGliding = true;
@@ -169,42 +194,78 @@ public class birdControlsNew : MonoBehaviour
         {
             float forwardSpeed = mRigidbody2D.velocity.magnitude; // Current forward speed
 
-            if (tiltAngle > 0)
+            if (isFacingRight)
             {
-                // Accelerate while diving
-                forwardSpeed += (tiltAngle / maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
-                // Clamp forward speed to the maximum value
-                forwardSpeed = Mathf.Min(forwardSpeed, 40f);
-            }
-            else if (tiltAngle < 0)
-            {
-                // Decelerate while climbing
-                // NOTE: An arbitrary 2 is added to the mult here as a deceleration factor.
-                forwardSpeed -= (tiltAngle / -maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
-
-                // Trigger stall if speed drops to half of the default flight speed
-                if (forwardSpeed <= initialGlideSpeed / 2)
+                if (tiltAngle > 0)
                 {
-                    isGliding = false;
-                    isStalling = true;
-                    mRigidbody2D.gravityScale = 1; // Turn on gravity
-                    mRigidbody2D.drag = 60; // Added high drag to simulate immediate fall
-                    Debug.Log("Stalled. Falling.");
-                    return;
+                    // Accelerate while diving
+                    forwardSpeed += (tiltAngle / maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
+                    // Clamp forward speed to the maximum value
+                    forwardSpeed = Mathf.Min(forwardSpeed, 40f);
+                }
+                else if (tiltAngle < 0)
+                {
+                    // Decelerate while climbing
+                    forwardSpeed -= (tiltAngle / -maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
+
+                    // Trigger stall if speed drops to half of the default flight speed
+                    if (forwardSpeed <= initialGlideSpeed / 2)
+                    {
+                        isGliding = false;
+                        isStalling = true;
+                        mRigidbody2D.gravityScale = 1; // Turn on gravity
+                        mRigidbody2D.drag = 60; // Added high drag to simulate immediate fall
+                        Debug.Log("Stalled. Falling.");
+                        return;
+                    }
+                }
+                else
+                {
+                    // Maintain default glide speed if angle is near parallel
+                    forwardSpeed = Mathf.Lerp(forwardSpeed, initialGlideSpeed, Time.deltaTime);
                 }
             }
             else
             {
-                // Maintain default glide speed if angle is near parallel
-                forwardSpeed = Mathf.Lerp(forwardSpeed, initialGlideSpeed, Time.deltaTime);
+                if (tiltAngle < 0)
+                {
+                    // Accelerate while diving (left)
+                    forwardSpeed += (tiltAngle / -maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
+                    // Clamp forward speed to the maximum value
+                    forwardSpeed = Mathf.Min(forwardSpeed, 40f);
+                }
+                else if (tiltAngle > 0)
+                {
+                    // Decelerate while climbing (left)
+                    forwardSpeed -= (tiltAngle / maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
+
+                    // Trigger stall if speed drops to half of the default flight speed
+                    if (forwardSpeed <= initialGlideSpeed / 2)
+                    {
+                        isGliding = false;
+                        isStalling = true;
+                        mRigidbody2D.gravityScale = 1; // Turn on gravity
+                        mRigidbody2D.drag = 60; // Added high drag to simulate immediate fall
+                        Debug.Log("Stalled. Falling.");
+                        return;
+                    }
+                }
+                else
+                {
+                    // Maintain default glide speed if angle is near parallel
+                    forwardSpeed = Mathf.Lerp(forwardSpeed, initialGlideSpeed, Time.deltaTime);
+                }
             }
 
-            // Set the velocity based on calculated forward speed
-            mRigidbody2D.velocity = transform.right * forwardSpeed;
+            // Determine the direction of gliding based on the bird's facing direction
+            float glideDirection = isFacingRight ? 1 : -1;
+
+            // Set the velocity based on calculated forward speed and direction
+            mRigidbody2D.velocity = transform.right * forwardSpeed * glideDirection;
 
             Debug.Log("Gliding. Tilt angle: " + tiltAngle + ", Speed: " + forwardSpeed);
         }
-    }
+    }   
 
     void UpdateStaminaUI()
     {

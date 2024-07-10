@@ -27,7 +27,7 @@ public class cameraScript : MonoBehaviour
     {
         transform.position = bird.transform.position + offset;
 
-        float birdSpeed = bird.GetComponent<Rigidbody>().velocity.magnitude;
+        float birdSpeed = bird.GetComponent<Rigidbody2D>().velocity.magnitude;
         float targetFOV = minFOV;
 
         if (birdSpeed > highSpeedThreshold)

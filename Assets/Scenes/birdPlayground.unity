@@ -351,7 +351,7 @@ Transform:
   m_GameObject: {fileID: 405358967}
   serializedVersion: 2
   m_LocalRotation: {x: -0.036300566, y: -0.00027253793, z: 0.0000136974395, w: -0.9993409}
-  m_LocalPosition: {x: -33.4, y: 9.16, z: -20}
+  m_LocalPosition: {x: -33.4, y: 7.95, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -772,7 +772,7 @@ Transform:
   m_GameObject: {fileID: 804446948}
   serializedVersion: 2
   m_LocalRotation: {x: -0.036300566, y: -0.00027253793, z: 0.0000136974395, w: -0.9993409}
-  m_LocalPosition: {x: -33.4, y: 9.16, z: -20}
+  m_LocalPosition: {x: -33.4, y: 7.95, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1682,7 +1682,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -896, y: -378}
+  m_AnchoredPosition: {x: -524, y: -183}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787478076
@@ -1745,72 +1745,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: jumpForce
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: maxStamina
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: stallSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: maxJumpForce
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: maxTiltAngle
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: staminaSlider
       value: 
       objectReference: {fileID: 1787478076}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: jumpChargeRate
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: initialGlideSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: stallForwardSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: tiltUpSpeedDecrease
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: staminaDepletionRate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1612638599717578575, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: tiltDownSpeedIncrease
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4195717069116317488, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4195717069116317488, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4195717069116317488, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4195717069116317488, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -40.4
       objectReference: {fileID: 0}
     - target: {fileID: 4195717069116317488, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.16
+      value: 5.95
       objectReference: {fileID: 0}
     - target: {fileID: 4195717069116317488, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: m_LocalPosition.z
