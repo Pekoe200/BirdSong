@@ -60,22 +60,23 @@ public class modCamera : MonoBehaviour
     private void UpdateCameraFOVBasedOnSpeed()
     {
         float birdSpeed = bird.GetComponent<Rigidbody2D>().velocity.magnitude;
+        bool birdCharge = bird.GetComponent<birdControlsNew>().isCharging;
 
-        if(birdSpeed > 0){
+        if(!birdCharge){
             if (birdSpeed > highSpeedThreshold)
-                {
-                    targetFOV = maxFOV;
-                }
-                else if (birdSpeed > lowSpeedThreshold)
-                {
-                    targetFOV = midFOV;
-                }
-                else
-                {
-                    targetFOV = minFOV;
-                }
+            {
+                targetFOV = maxFOV;
+            }
+            else if (birdSpeed > lowSpeedThreshold)
+            {
+                targetFOV = midFOV;
+            }
+            else
+            {
+                targetFOV = minFOV;
+            }
         }
-        
+
         
     }
 }

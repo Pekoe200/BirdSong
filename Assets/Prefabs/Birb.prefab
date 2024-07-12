@@ -59,6 +59,7 @@ MonoBehaviour:
   stallSpeed: 10
   maxTiltAngle: 30
   stallForwardSpeed: 5
+  isCharging: 0
   staminaSlider: {fileID: 0}
 --- !u!50 &3474868973787128096
 Rigidbody2D:

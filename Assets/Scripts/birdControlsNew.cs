@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class birdControlsNew : MonoBehaviour
-{
+public class birdControlsNew : MonoBehaviour {
     private Rigidbody2D mRigidbody2D;
-    public float walkSpeed = 5f;
-    public float jumpForce = 5f;
-    public float maxJumpForce = 30f;
+    public float walkSpeed = 5f; // Base walking speed
+    public float jumpForce = 5f; // Minimum allowable jump height
+    public float maxJumpForce = 30f; // Maximum allowable jump height
     public float jumpChargeRate = 15f;
     public float maxStamina = 100f; // Maximum stamina value
     public float initialGlideSpeed = 15; // Initial speed when starting to glide
@@ -18,28 +17,31 @@ public class birdControlsNew : MonoBehaviour
     public float stallSpeed = 10f; // Speed threshold below which the bird stalls
     public float maxTiltAngle = 30f; // Maximum tilt angle before stalling
     public float stallForwardSpeed = 5f; // Forward speed during stall
+    private float tiltAngle = 0f; // Current tilt angle
     private float currentStamina;
     private float currentJumpForce;
     private bool isGrounded = true;
     private bool isGliding = false;
-    private bool isStalling = false; // Added isStalling variable
+    private bool isStalling = false; 
     private bool isFacingRight = true;
-    private bool isCharging = false;
-    private float tiltAngle = 0f; // Current tilt angle
+    public bool isCharging = false;
+
 
     public Slider staminaSlider; // Reference to the UI Slider for stamina
 
     void Start()
     {
+        // Ensure bird can FEEL
         mRigidbody2D = GetComponent<Rigidbody2D>();
         if (mRigidbody2D == null)
         {
             Debug.LogError("Rigidbody2D component missing from this game object");
         }
 
-        currentStamina = maxStamina; // Initialize current stamina to max stamina
-        staminaSlider.maxValue = maxStamina; // Set the max value of the slider
-        staminaSlider.value = currentStamina; // Set the initial value of the slider
+        // Initialize base values
+        currentStamina = maxStamina; 
+        staminaSlider.maxValue = maxStamina; 
+        staminaSlider.value = currentStamina; 
     }
 
     void Update()
@@ -62,25 +64,23 @@ public class birdControlsNew : MonoBehaviour
 
     void HandleWalking()
     {
-        mRigidbody2D.gravityScale = 1; // Ensure gravity is on
+        mRigidbody2D.gravityScale = 1; 
         float move = Input.GetAxis("Horizontal"); // Get input from A/D keys or Left/Right Arrow keys
         Vector2 moveDirection = new Vector2(move, 0); // Move in the x direction
 
+        // Only allow the bird to move when it is not charging a jump
         if (!isCharging)
         {
             mRigidbody2D.velocity = new Vector2(moveDirection.x * walkSpeed, mRigidbody2D.velocity.y);
         }
-        // Flip character based on walking direction
-        if (move > 0 && !isFacingRight)
-        {
-            Flip();
-        }
-        if (move < 0 && isFacingRight)
-        {
-            Flip();
-        }
 
-        Debug.Log("Walking. Move direction: " + move);
+        // Flip character based on walking direction
+        if ((move > 0 && !isFacingRight) || (move < 0 && isFacingRight)) 
+        {
+            Flip();
+        } 
+
+        // Debug.Log("Walking. Move direction: " + move);
     }
 
     void Flip()
@@ -99,7 +99,7 @@ public class birdControlsNew : MonoBehaviour
             // Increase the jump force while holding down the jump key, but stop if max jump force is reached
             if (currentJumpForce < maxJumpForce)
             {
-                isCharging = !isCharging;
+                isCharging = true;
                 mRigidbody2D.velocity = new Vector2(0, 0);
                 float forceIncrease = jumpChargeRate * Time.deltaTime;
                 currentJumpForce += forceIncrease;
@@ -126,7 +126,6 @@ public class birdControlsNew : MonoBehaviour
                 Debug.Log("Stamina depleted. Jumping with force: " + currentJumpForce);
             }
 
-            // If bird attempts to move, cancel the jump
         }
 
         // Check if the jump key is released and there is some stamina left
@@ -145,11 +144,16 @@ public class birdControlsNew : MonoBehaviour
 
     void ApplyJumpForce()
     {
+        // Set variables
+        isCharging = false;
+        isGrounded = false;
+
+        // Make camera do fun thing
         modCamera.Instance.ShakeCamera(0f);
         modCamera.Instance.ZoomCamera(0f);
-        isCharging = !isCharging;
-        mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, currentJumpForce);
-        isGrounded = false;
+        
+        mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, currentJumpForce); // Do the jump
+        
         currentJumpForce = jumpForce; // Reset the jump force
     }
 
@@ -177,7 +181,7 @@ public class birdControlsNew : MonoBehaviour
         if (isStalling)
         {
             // If stalling, check if the tilt angle is greater than or equal to 0 to resume gliding
-            if ((tiltAngle >= 0 && isFacingRight) || (tiltAngle <= 0 && !isFacingRight))
+            if ((tiltAngle >= 8 && isFacingRight) || (tiltAngle <= -8 && !isFacingRight))
             {
                 isStalling = false;
                 isGliding = true;
@@ -187,7 +191,7 @@ public class birdControlsNew : MonoBehaviour
             else
             {
                 // Continue falling with gravity
-                mRigidbody2D.velocity = new Vector2(stallForwardSpeed, mRigidbody2D.velocity.y);
+                mRigidbody2D.velocity = new Vector2(isFacingRight ? stallForwardSpeed : -stallForwardSpeed, mRigidbody2D.velocity.y);
             }
         }
         else
@@ -196,14 +200,14 @@ public class birdControlsNew : MonoBehaviour
 
             if (isFacingRight)
             {
-                if (tiltAngle > 0)
+                if (tiltAngle > 8)
                 {
                     // Accelerate while diving
                     forwardSpeed += (tiltAngle / maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
                     // Clamp forward speed to the maximum value
                     forwardSpeed = Mathf.Min(forwardSpeed, 40f);
                 }
-                else if (tiltAngle < 0)
+                else if (tiltAngle < 8)
                 {
                     // Decelerate while climbing
                     forwardSpeed -= (tiltAngle / -maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
@@ -227,14 +231,14 @@ public class birdControlsNew : MonoBehaviour
             }
             else
             {
-                if (tiltAngle < 0)
+                if (tiltAngle < -4)
                 {
                     // Accelerate while diving (left)
                     forwardSpeed += (tiltAngle / -maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
                     // Clamp forward speed to the maximum value
                     forwardSpeed = Mathf.Min(forwardSpeed, 40f);
                 }
-                else if (tiltAngle > 0)
+                else if (tiltAngle > -8)
                 {
                     // Decelerate while climbing (left)
                     forwardSpeed -= (tiltAngle / maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
@@ -279,10 +283,10 @@ public class birdControlsNew : MonoBehaviour
         {
             isGrounded = true;
             isGliding = false;
-            isStalling = false; // Reset isStalling when landing
+            isStalling = false; 
             mRigidbody2D.drag = 0;
-            tiltAngle = 0f; // Reset tilt angle when landing
-            transform.rotation = Quaternion.Euler(0, 0, 0); // Reset rotation when landing
+            tiltAngle = 0f; 
+            transform.rotation = Quaternion.Euler(0, 0, 0); 
             Debug.Log("Landed on ground.");
         }
     }
@@ -294,7 +298,7 @@ public class birdControlsNew : MonoBehaviour
         {
             isGrounded = true;
             isGliding = false;
-            isStalling = false; // Reset isStalling when staying on ground
+            isStalling = false; 
             Debug.Log("Staying on ground.");
         }
     }
