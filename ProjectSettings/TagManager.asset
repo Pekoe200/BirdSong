@@ -60,6 +60,9 @@ TagManager:
   - name: Bird
     uniqueID: 1529785197
     locked: 0
+  - name: Front Decor
+    uniqueID: 3081660711
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
