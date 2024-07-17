@@ -9,10 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4195717069116317488}
-  - component: {fileID: 1612638599717578575}
   - component: {fileID: 3474868973787128096}
   - component: {fileID: 8789364315078228729}
   - component: {fileID: 3516329767924446931}
+  - component: {fileID: 5662204143174574019}
+  - component: {fileID: 3422739998358349337}
+  - component: {fileID: 1141033378644279729}
+  - component: {fileID: 6144143717329702391}
+  - component: {fileID: 5298749458927667526}
   m_Layer: 0
   m_Name: Birb
   m_TagString: Player
@@ -35,32 +39,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!114 &1612638599717578575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6444917150745871874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bf1ab74b1fc51844bc9be045fa70308, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 5
-  jumpForce: 5
-  maxJumpForce: 15
-  jumpChargeRate: 15
-  maxStamina: 100
-  initialGlideSpeed: 15
-  tiltDownSpeedIncrease: 30
-  tiltUpSpeedDecrease: 10
-  tiltUpHeightGain: 5
-  stallSpeed: 10
-  maxTiltAngle: 30
-  stallForwardSpeed: 5
-  isCharging: 0
-  staminaSlider: {fileID: 0}
 --- !u!50 &3474868973787128096
 Rigidbody2D:
   serializedVersion: 4
@@ -175,3 +153,88 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.64
+--- !u!114 &5662204143174574019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444917150745871874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb1d8fa24e69df4eae559995871e100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialGlideSpeed: 15
+  tiltDownSpeedIncrease: 30
+  tiltUpSpeedDecrease: 10
+  stallSpeed: 10
+  maxTiltAngle: 30
+  stallForwardSpeed: 5
+--- !u!114 &3422739998358349337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444917150745871874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d4d84895140f7439d70b980bb9ade8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  landingCheckDistance: 2.5
+  quickLandingSpeed: 50
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  isGrounded: 1
+  isGliding: 0
+  isStalling: 0
+  isFacingRight: 1
+  isCharging: 0
+  currentStamina: 0
+  tiltAngle: 0
+  staminaSlider: {fileID: 0}
+--- !u!114 &1141033378644279729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444917150745871874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89d46cd08cd355b418ae7d8ca2c09199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 5
+  maxJumpForce: 15
+  jumpChargeRate: 15
+--- !u!114 &6144143717329702391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444917150745871874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9ece90e01329b4ab169a52454a1c9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothSpeed: 2
+--- !u!114 &5298749458927667526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444917150745871874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4e2b47d911f0746b7849f584da9a93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 5

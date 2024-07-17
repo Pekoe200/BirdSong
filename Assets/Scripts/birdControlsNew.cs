@@ -25,7 +25,11 @@ public class birdControlsNew : MonoBehaviour {
     private bool isStalling = false; 
     private bool isFacingRight = true;
     public bool isCharging = false;
+     public float smoothSpeed = 2f;
 
+    public float landingCheckDistance = 5f; // Distance to check for ground below
+    public float quickLandingSpeed = 50f; // Speed at which the bird will land
+    public LayerMask groundLayerMask; // Layer mask for the ground
 
     public Slider staminaSlider; // Reference to the UI Slider for stamina
 
@@ -59,6 +63,7 @@ public class birdControlsNew : MonoBehaviour {
         {
             CheckForGlide();
         }
+        HandleQuickLanding(); // Add this line
         UpdateStaminaUI();
     }
 
@@ -270,6 +275,32 @@ public class birdControlsNew : MonoBehaviour {
             Debug.Log("Gliding. Tilt angle: " + tiltAngle + ", Speed: " + forwardSpeed);
         }
     }   
+
+    void HandleQuickLanding()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && IsGroundBelow())
+        {
+            QuickLand();
+        }
+    }
+    bool IsGroundBelow()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, landingCheckDistance, groundLayerMask);
+        Debug.Log("Raycast hit: " + hit.collider); // Add this log
+        if (hit.collider != null && hit.collider.CompareTag("Ground"))
+        {
+            Debug.Log("Ground detected below."); // Add this log
+            return true;
+        }
+        Debug.Log("No ground detected."); // Add this log
+        return false;
+    }  
+
+void QuickLand()
+{
+    mRigidbody2D.velocity = new Vector2(1, Mathf.Lerp(-2, -quickLandingSpeed, smoothSpeed * Time.deltaTime)); // Set horizontal velocity to 0 for straight down movement
+    Debug.Log("Quick landing.");
+}
 
     void UpdateStaminaUI()
     {
