@@ -8,6 +8,7 @@ TagManager:
   - Create
   - Bird
   - Ground
+  - LeftBoundary
   layers:
   - Default
   - TransparentFX
