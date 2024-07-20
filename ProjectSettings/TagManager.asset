@@ -9,6 +9,7 @@ TagManager:
   - Bird
   - Ground
   - LeftBoundary
+  - RightBoundary
   layers:
   - Default
   - TransparentFX
