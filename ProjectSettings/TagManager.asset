@@ -8,11 +8,13 @@ TagManager:
   - Create
   - Bird
   - Ground
+  - LeftBoundary
+  - RightBoundary
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Bird
   - Water
   - UI
   - 
@@ -42,6 +44,27 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2750272709
+    locked: 0
+  - name: Stone
+    uniqueID: 274241331
+    locked: 0
+  - name: Trunk
+    uniqueID: 901157361
+    locked: 0
+  - name: Foliage
+    uniqueID: 2339774867
+    locked: 0
+  - name: Fruit
+    uniqueID: 1504087599
+    locked: 0
+  - name: Bird
+    uniqueID: 1529785197
+    locked: 0
+  - name: Front Decor
+    uniqueID: 3081660711
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
