@@ -5,10 +5,12 @@ using UnityEngine;
 public class birdQuickLanding : MonoBehaviour {
     private birdController birdController;
     private Rigidbody2D mRigidbody2D;
+    private Animator animator;
     public float smoothSpeed = 2f;
 
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         birdController = GetComponent<birdController>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
     }
@@ -18,6 +20,13 @@ public class birdQuickLanding : MonoBehaviour {
         if (Input.GetKey(KeyCode.LeftShift) && IsGroundBelow())
         {
             QuickLand();
+            animator.SetBool("isLanding", true);
+            birdController.tiltAngle = 0f;
+
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            animator.SetBool("isLanding", false);
         }
     }
 

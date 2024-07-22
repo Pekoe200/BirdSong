@@ -5,6 +5,8 @@ using UnityEngine;
 public class birdGliding : MonoBehaviour {
     private birdController birdController;
     private Rigidbody2D mRigidbody2D;
+    private Animator animator; // Add reference to Animator
+
     public float initialGlideSpeed = 15;
     public float tiltDownSpeedIncrease = 30f;
     public float tiltUpSpeedDecrease = 10f;
@@ -16,6 +18,7 @@ public class birdGliding : MonoBehaviour {
     {
         birdController = GetComponent<birdController>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>(); // Initialize Animator reference using GetComponentInChildren
     }
 
     public void CheckForGlide()
@@ -25,6 +28,7 @@ public class birdGliding : MonoBehaviour {
             birdController.isGliding = true;
             mRigidbody2D.velocity = transform.right * initialGlideSpeed;
             Debug.Log("Entering glide state with initial speed.");
+            animator.SetBool("isGliding", true); // Update Animator parameter
         }
     }
 
@@ -37,14 +41,19 @@ public class birdGliding : MonoBehaviour {
 
         transform.rotation = Quaternion.Euler(0, 0, -birdController.tiltAngle);
 
+        // Update Animator parameter for tiltAngle
+        animator.SetFloat("tiltAngle", birdController.tiltAngle);
+
         if (birdController.isStalling)
         {
             if ((birdController.tiltAngle >= 8 && birdController.isFacingRight) || (birdController.tiltAngle <= -8 && !birdController.isFacingRight))
             {
                 birdController.isStalling = false;
+                animator.SetBool("isStalling", false);
                 birdController.isGliding = true;
                 mRigidbody2D.gravityScale = 0;
                 Debug.Log("Resuming glide state.");
+                animator.SetBool("isGliding", true); // Update Animator parameter
             }
             else
             {
@@ -70,9 +79,11 @@ public class birdGliding : MonoBehaviour {
                     {
                         birdController.isGliding = false;
                         birdController.isStalling = true;
+                        animator.SetBool("isStalling", true);
                         mRigidbody2D.gravityScale = 1;
                         mRigidbody2D.drag = 60;
                         Debug.Log("Stalled. Falling.");
+                        animator.SetBool("isGliding", false); // Update Animator parameter
                         return;
                     }
                 }
@@ -96,9 +107,11 @@ public class birdGliding : MonoBehaviour {
                     {
                         birdController.isGliding = false;
                         birdController.isStalling = true;
+                        animator.SetBool("isStalling", true);
                         mRigidbody2D.gravityScale = 1;
                         mRigidbody2D.drag = 60;
                         Debug.Log("Stalled. Falling.");
+                        animator.SetBool("isGliding", false); // Update Animator parameter
                         return;
                     }
                 }

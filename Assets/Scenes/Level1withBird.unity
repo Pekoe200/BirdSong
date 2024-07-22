@@ -5109,6 +5109,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Birb
       objectReference: {fileID: 0}
+    - target: {fileID: 8789364315078228729, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c60c23ba3542cf842bad185672999114, type: 3}
+    - target: {fileID: 8789364315078228729, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

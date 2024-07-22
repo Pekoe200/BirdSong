@@ -32,10 +32,12 @@ public class birdController : MonoBehaviour {
     private birdJumping birdJumping;
     private birdGliding birdGliding;
     private birdQuickLanding birdQuickLanding;
+    private Animator animator;
 
     void Start()
     {
         mRigidbody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
         if (mRigidbody2D == null)
         {
             Debug.LogError("Rigidbody2D component missing from this game object");
@@ -81,6 +83,7 @@ public class birdController : MonoBehaviour {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            animator.SetBool("isGrounded", true);
             isGliding = false;
             isStalling = false; 
             mRigidbody2D.drag = 0;
@@ -95,6 +98,7 @@ public class birdController : MonoBehaviour {
         if (collision.gameObject.CompareTag("Ground") && !isGrounded)
         {
             isGrounded = true;
+            animator.SetBool("isGrounded", true);
             isGliding = false;
             isStalling = false; 
             Debug.Log("Staying on ground.");
@@ -107,6 +111,7 @@ public class birdController : MonoBehaviour {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+            animator.SetBool("isGrounded", false);
             Debug.Log("Left ground.");
         }
     }

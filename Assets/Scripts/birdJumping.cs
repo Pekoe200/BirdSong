@@ -10,12 +10,14 @@ public class birdJumping : MonoBehaviour {
     public float jumpChargeRate = 15f;
 
     private float currentJumpForce;
+    private Animator animator;
 
     void Start()
     {
         birdController = GetComponent<birdController>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
         currentJumpForce = jumpForce;
+        animator = GetComponentInChildren<Animator>();
     }
 
     public void HandleJumping()
@@ -25,6 +27,7 @@ public class birdJumping : MonoBehaviour {
             if (currentJumpForce < maxJumpForce)
             {
                 birdController.isCharging = true;
+                animator.SetBool("isCharging", true);
                 mRigidbody2D.velocity = new Vector2(0, 0);
                 float forceIncrease = jumpChargeRate * Time.deltaTime;
                 currentJumpForce += forceIncrease;
@@ -58,6 +61,7 @@ public class birdJumping : MonoBehaviour {
     void ApplyJumpForce()
     {
         birdController.isCharging = false;
+        animator.SetBool("isCharging", false);
         birdController.isGrounded = false;
 
         modCamera.Instance.ShakeCamera(0f);

@@ -5,12 +5,15 @@ using UnityEngine;
 public class birdWalking : MonoBehaviour {
     private birdController birdController;
     private Rigidbody2D mRigidbody2D;
+    private Animator animator; // Add reference to Animator
+
     public float walkSpeed = 5f;
 
     void Start()
     {
         birdController = GetComponent<birdController>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>(); // Initialize Animator reference using GetComponentInChildren
     }
 
     public void HandleWalking()
@@ -23,6 +26,9 @@ public class birdWalking : MonoBehaviour {
         {
             mRigidbody2D.velocity = new Vector2(moveDirection.x * walkSpeed, mRigidbody2D.velocity.y);
         }
+
+        // Update Animator parameter for xVelocity
+        animator.SetFloat("xVelocity", Mathf.Abs(mRigidbody2D.velocity.x));
 
         if ((move > 0 && !birdController.isFacingRight) || (move < 0 && birdController.isFacingRight))
         {
