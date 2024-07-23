@@ -112,7 +112,9 @@ public class birdController : MonoBehaviour {
                 isGrounded = true;
                 animator.SetBool("isGrounded", true);
                 isGliding = false;
+                animator.SetBool("isGliding", false);
                 isStalling = false;
+                animator.SetBool("isStalling", false);
                 mRigidbody2D.drag = 0;
                 tiltAngle = 0f;
                 transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -127,7 +129,9 @@ public class birdController : MonoBehaviour {
             isGrounded = true;
             animator.SetBool("isGrounded", true);
             isGliding = false;
+            animator.SetBool("isGliding", false);
             isStalling = false;
+            animator.SetBool("isStalling", false);
             Debug.Log("Staying on ground.");
         }
     }
