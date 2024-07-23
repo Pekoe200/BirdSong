@@ -18,7 +18,7 @@ public class birdWalking : MonoBehaviour {
 
     public void HandleWalking()
     {
-        mRigidbody2D.gravityScale = 1;
+        mRigidbody2D.gravityScale = 3;
         float move = Input.GetAxis("Horizontal");
         Vector2 moveDirection = new Vector2(move, 0);
 

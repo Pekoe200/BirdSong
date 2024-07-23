@@ -12,20 +12,16 @@ public class birdJumping : MonoBehaviour {
     private float currentJumpForce;
     private Animator animator;
 
-    void Start()
-    {
+    void Start() {
         birdController = GetComponent<birdController>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
         currentJumpForce = jumpForce;
         animator = GetComponentInChildren<Animator>();
     }
 
-    public void HandleJumping()
-    {
-        if (Input.GetKey(KeyCode.Space) && birdController.currentStamina > 0)
-        {
-            if (currentJumpForce < maxJumpForce)
-            {
+    public void HandleJumping() {
+        if (Input.GetKey(KeyCode.Space) && birdController.currentStamina > 0) {
+            if (currentJumpForce < maxJumpForce) {
                 birdController.isCharging = true;
                 animator.SetBool("isCharging", true);
                 mRigidbody2D.velocity = new Vector2(0, 0);
@@ -41,26 +37,24 @@ public class birdJumping : MonoBehaviour {
                 modCamera.Instance.ZoomCamera(currentJumpForce / maxJumpForce);
             }
 
-            if (birdController.currentStamina == 0)
-            {
+            if (birdController.currentStamina == 0) {
                 ApplyJumpForce();
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) && currentJumpForce > jumpForce)
-        {
+        if (Input.GetKeyUp(KeyCode.Space) && currentJumpForce > jumpForce) {
             ApplyJumpForce();
         }
 
-        if (Input.GetKey(KeyCode.Space) && birdController.currentStamina <= 0)
-        {
+        if (Input.GetKey(KeyCode.Space) && birdController.currentStamina <= 0) {
             Debug.Log("Cannot initiate jump. Stamina depleted.");
         }
     }
 
-    void ApplyJumpForce()
-    {
+    void ApplyJumpForce() {
+        mRigidbody2D.gravityScale = 1;
         birdController.isCharging = false;
+        birdController.hasJumped = true;
         animator.SetBool("isCharging", false);
         birdController.isGrounded = false;
 
