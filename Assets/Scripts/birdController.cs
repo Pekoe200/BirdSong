@@ -108,22 +108,18 @@ public class birdController : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
         Debug.Log("OnCollisionEnter2D with: " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Ground")) {
-            Vector2 contactNormal = collision.contacts[0].normal;
-            if (contactNormal.y > 0) {
-                // Bird is landing from above
-                if (!isGrounded || mRigidbody2D.velocity.y <= 0) {
-                    isGrounded = true;
-                    animator.SetBool("isGrounded", true);
-                    isGliding = false;
-                    animator.SetBool("isGliding", false);
-                    isStalling = false;
-                    animator.SetBool("isStalling", false);
-                    mRigidbody2D.drag = 0;
-                    tiltAngle = 0f;
-                    transform.rotation = Quaternion.Euler(0, 0, 0);
-                    Debug.Log("Bird landed on ground.");
-                    hasJumped = false; // Only reset hasJumped when the bird truly lands
-                }
+            if (!isGrounded || mRigidbody2D.velocity.y <= 0) {
+                isGrounded = true;
+                animator.SetBool("isGrounded", true);
+                isGliding = false;
+                animator.SetBool("isGliding", false);
+                isStalling = false;
+                animator.SetBool("isStalling", false);
+                mRigidbody2D.drag = 0;
+                tiltAngle = 0f;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                Debug.Log("Bird landed on ground.");
+                hasJumped = false; // Only reset hasJumped when the bird truly lands
             }
         }
     }
