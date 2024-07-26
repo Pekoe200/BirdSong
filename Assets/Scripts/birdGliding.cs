@@ -81,7 +81,7 @@ public class birdGliding : MonoBehaviour {
             float glideDirection = birdController.isFacingRight ? 1 : -1;
             mRigidbody2D.velocity = transform.right * forwardSpeed * glideDirection;
 
-            Debug.Log("Gliding. Tilt angle: " + birdController.tiltAngle + ", Speed: " + forwardSpeed);
+            // Debug.Log("Gliding. Tilt angle: " + birdController.tiltAngle + ", Speed: " + forwardSpeed);
         }
     }
 

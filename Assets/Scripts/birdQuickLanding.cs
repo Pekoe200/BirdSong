@@ -17,7 +17,7 @@ public class birdQuickLanding : MonoBehaviour {
 
     public void HandleQuickLanding()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && IsGroundBelow())
+        if (Input.GetKey(KeyCode.LeftShift) && IsGroundBelow() && !birdController.isGrounded)
         {
             QuickLand();
             animator.SetBool("isLanding", true);

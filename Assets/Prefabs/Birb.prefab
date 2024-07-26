@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 6443660402664499221}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4ba83e09667472247b988b64ec45b926, type: 2}
+  m_Controller: {fileID: 9100000, guid: f7a05d530cab1fd4a955fca9819dbd49, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -117,11 +117,12 @@ GameObject:
   - component: {fileID: 4195717069116317488}
   - component: {fileID: 3474868973787128096}
   - component: {fileID: 3516329767924446931}
-  - component: {fileID: 5662204143174574019}
   - component: {fileID: 3422739998358349337}
+  - component: {fileID: 5662204143174574019}
   - component: {fileID: 1141033378644279729}
   - component: {fileID: 6144143717329702391}
   - component: {fileID: 5298749458927667526}
+  - component: {fileID: 4925375066384194662}
   m_Layer: 3
   m_Name: Birb
   m_TagString: Player
@@ -207,24 +208,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.64
---- !u!114 &5662204143174574019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6444917150745871874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fb1d8fa24e69df4eae559995871e100, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialGlideSpeed: 15
-  tiltDownSpeedIncrease: 30
-  tiltUpSpeedDecrease: 10
-  stallSpeed: 10
-  maxTiltAngle: 30
-  stallForwardSpeed: 5
 --- !u!114 &3422739998358349337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +237,25 @@ MonoBehaviour:
   tiltAngle: 0
   hasJumped: 0
   staminaSlider: {fileID: 0}
+  shouldStayGrounded: 0
+--- !u!114 &5662204143174574019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444917150745871874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb1d8fa24e69df4eae559995871e100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialGlideSpeed: 15
+  tiltDownSpeedIncrease: 30
+  tiltUpSpeedDecrease: 10
+  stallSpeed: 10
+  maxTiltAngle: 30
+  stallForwardSpeed: 5
 --- !u!114 &1141033378644279729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,3 +297,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
+--- !u!114 &4925375066384194662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444917150745871874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaffee6c36a9f7e43b0782417b14a098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

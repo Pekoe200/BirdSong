@@ -11,6 +11,7 @@ public class birdJumping : MonoBehaviour {
 
     private float currentJumpForce;
     private Animator animator;
+    private bool chargeStarted = false;
 
     void Start() {
         birdController = GetComponent<birdController>();
@@ -20,10 +21,15 @@ public class birdJumping : MonoBehaviour {
     }
 
     public void HandleJumping() {
-        if (Input.GetKey(KeyCode.Space) && birdController.currentStamina > 0) {
+        if (Input.GetKeyDown(KeyCode.Space) && birdController.currentStamina > 0 && !chargeStarted) {
+            birdController.isCharging = true;
+            animator.SetBool("isCharging", true);
+            birdController.shouldStayGrounded = false;
+            chargeStarted = true;
+        }
+
+        if (Input.GetKey(KeyCode.Space) && birdController.currentStamina > 0 && chargeStarted) {
             if (currentJumpForce < maxJumpForce) {
-                birdController.isCharging = true;
-                animator.SetBool("isCharging", true);
                 mRigidbody2D.velocity = new Vector2(0, 0);
                 float forceIncrease = jumpChargeRate * Time.deltaTime;
                 currentJumpForce += forceIncrease;
@@ -42,26 +48,31 @@ public class birdJumping : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) && currentJumpForce > jumpForce) {
+        if (Input.GetKeyUp(KeyCode.Space) && chargeStarted) {
             ApplyJumpForce();
         }
 
-        if (Input.GetKey(KeyCode.Space) && birdController.currentStamina <= 0) {
-            Debug.Log("Cannot initiate jump. Stamina depleted.");
+        if (!Input.GetKey(KeyCode.Space)) {
+            chargeStarted = false;
         }
     }
 
     void ApplyJumpForce() {
-        mRigidbody2D.gravityScale = 1;
+        birdController.isGrounded = false;
+        birdController.shouldStayGrounded = false;
         birdController.isCharging = false;
         birdController.hasJumped = true;
+        mRigidbody2D.gravityScale = 1;
+
+        animator.SetBool("hasJumped", true);
         animator.SetBool("isCharging", false);
-        birdController.isGrounded = false;
+        animator.SetBool("isGrounded", false);
 
         modCamera.Instance.ShakeCamera(0f);
         modCamera.Instance.ZoomCamera(0f);
 
         mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, currentJumpForce);
         currentJumpForce = jumpForce;
+        chargeStarted = false; 
     }
 }
