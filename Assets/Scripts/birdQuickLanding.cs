@@ -34,7 +34,7 @@ public class birdQuickLanding : MonoBehaviour {
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, birdController.landingCheckDistance, birdController.groundLayerMask);
         Debug.Log("Raycast hit: " + hit.collider);
-        if (hit.collider != null && hit.collider.CompareTag("Ground"))
+        if (hit.collider != null)
         {
             Debug.Log("Ground detected below.");
             return true;
