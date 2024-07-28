@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Level1withBird.unity
+    guid: 5f2a23d9ad47209449a9e168b6005d5b
+  - enabled: 1
+    path: Assets/Scenes/Level2withBird.unity
+    guid: 7f0dcdfcfb52f28478c7fe17a7af1fa3
+  - enabled: 1
+    path: Assets/Scenes/Level3withBird.unity
+    guid: 5dda228ebb36b3f4aac21a38ef670ce2
+  - enabled: 1
+    path: Assets/Scenes/Level3.5ParkingLotFinal.unity
+    guid: 3c43fd0137efb3e4d84db52d697ac864
   m_configObjects: {}
