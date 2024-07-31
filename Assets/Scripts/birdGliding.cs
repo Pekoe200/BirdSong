@@ -99,11 +99,14 @@ public class birdGliding : MonoBehaviour {
     }
 
     void EnterStall() {
-        birdController.isStalling = true;
-        mRigidbody2D.gravityScale = 1;
-        mRigidbody2D.drag = 60;
-        Debug.Log("Stalled. Falling.");
-        animator.SetBool("isStalling", true);
-        animator.SetBool("isGliding", false);
+        if(!birdController.isFlipping)
+        {
+            birdController.isStalling = true;
+            mRigidbody2D.gravityScale = 1;
+            mRigidbody2D.drag = 60;
+            Debug.Log("Stalled. Falling.");
+            animator.SetBool("isStalling", true);
+            animator.SetBool("isGliding", false);
+        }
     }
 }

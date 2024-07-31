@@ -8,7 +8,7 @@ public class birdController : MonoBehaviour {
     public float maxStamina = 100f;
     public float landingCheckDistance = 5f;
     public float quickLandingSpeed = 50f;
-    public float groundCheckDistance = 0.3f; // Distance for the proximity check
+    public float groundCheckDistance = 0.6f; // Distance for the proximity check
     public float groundProximityThreshold = 0.1f; // Threshold for proximity check
     public LayerMask groundLayerMask; // Layer mask for ground detection
 
@@ -17,6 +17,7 @@ public class birdController : MonoBehaviour {
     public bool isStalling = false;
     public bool isFacingRight = true;
     public bool isCharging = false;
+    public bool isFlipping = false;
     public float currentStamina;
     public float tiltAngle = 0f;
     public bool hasJumped = false;
@@ -29,6 +30,9 @@ public class birdController : MonoBehaviour {
     private birdGliding birdGliding;
     private birdQuickLanding birdQuickLanding;
     private Animator animator;
+
+    private Coroutine groundCheckCoroutine;
+    private const float groundCheckDelay = 0.2f; // Small delay for ground check
 
     void Start() {
         mRigidbody2D = GetComponent<Rigidbody2D>();
@@ -108,7 +112,17 @@ public class birdController : MonoBehaviour {
 
     void OnCollisionExit2D(Collision2D collision) {
         Debug.Log("OnCollisionExit2D with: " + collision.gameObject.name);
-        mRigidbody2D.gravityScale = 1;
+        if (groundCheckCoroutine != null) {
+            StopCoroutine(groundCheckCoroutine);
+            Debug.Log("Coroutine Stopped");
+        }
+        groundCheckCoroutine = StartCoroutine(CheckIfGroundedAfterDelay());
+        Debug.Log("Coroutine Started");
+    }
+
+    private IEnumerator CheckIfGroundedAfterDelay() {
+        yield return new WaitForSeconds(groundCheckDelay);
+
         Vector2 origin = new Vector2(transform.position.x, transform.position.y);
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, groundLayerMask);
         Debug.DrawRay(origin, Vector2.down * groundCheckDistance, Color.red);
