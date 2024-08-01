@@ -34,8 +34,16 @@ public class birdGliding : MonoBehaviour {
     }
 
     public void HandleGliding() {
-        float tiltInput = Input.GetAxis("Horizontal");
-        birdController.tiltAngle += tiltInput * Time.deltaTime * 100f;
+        float tiltInput = -Input.GetAxis("Vertical");
+        if(birdController.isFacingRight)
+        {
+            birdController.tiltAngle += tiltInput * Time.deltaTime * 100f;
+        }
+        else
+        {
+            birdController.tiltAngle -= tiltInput * Time.deltaTime * 100f;
+        }
+        
         birdController.tiltAngle = Mathf.Clamp(birdController.tiltAngle, -maxTiltAngle, maxTiltAngle);
         mRigidbody2D.drag = 0;
 

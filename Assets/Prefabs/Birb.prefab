@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8114237962654274425}
   - component: {fileID: 2341442288593337473}
   - component: {fileID: 980104885881992802}
+  - component: {fileID: 1242456760210009766}
   m_Layer: 3
   m_Name: BirbSprite
   m_TagString: Untagged
@@ -106,6 +107,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1242456760210009766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6443660402664499221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb462c3c75bb104a96b8a368bdef1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6444917150745871874
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +135,6 @@ GameObject:
   - component: {fileID: 1141033378644279729}
   - component: {fileID: 6144143717329702391}
   - component: {fileID: 5298749458927667526}
-  - component: {fileID: 4925375066384194662}
   m_Layer: 3
   m_Name: Birb
   m_TagString: Player
@@ -233,6 +245,7 @@ MonoBehaviour:
   isStalling: 0
   isFacingRight: 1
   isCharging: 0
+  isFlipping: 0
   currentStamina: 0
   tiltAngle: 0
   hasJumped: 0
@@ -297,15 +310,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
---- !u!114 &4925375066384194662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6444917150745871874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaffee6c36a9f7e43b0782417b14a098, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
