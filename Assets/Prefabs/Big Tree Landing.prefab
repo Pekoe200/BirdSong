@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8890971273438927272}
   - component: {fileID: 1777304574770908935}
   - component: {fileID: 9223168543699552866}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: leaves2
   m_TagString: Ground
   m_Icon: {fileID: 0}

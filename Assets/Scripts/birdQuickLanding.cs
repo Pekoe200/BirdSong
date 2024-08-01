@@ -5,19 +5,28 @@ using UnityEngine;
 public class birdQuickLanding : MonoBehaviour {
     private birdController birdController;
     private Rigidbody2D mRigidbody2D;
+    private Animator animator;
     public float smoothSpeed = 2f;
 
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         birdController = GetComponent<birdController>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     public void HandleQuickLanding()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && IsGroundBelow())
+        if (Input.GetKey(KeyCode.LeftShift) && IsGroundBelow() && !birdController.isGrounded)
         {
             QuickLand();
+            animator.SetBool("isLanding", true);
+            birdController.tiltAngle = 0f;
+
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            animator.SetBool("isLanding", false);
         }
     }
 
@@ -25,7 +34,7 @@ public class birdQuickLanding : MonoBehaviour {
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, birdController.landingCheckDistance, birdController.groundLayerMask);
         Debug.Log("Raycast hit: " + hit.collider);
-        if (hit.collider != null && hit.collider.CompareTag("Ground"))
+        if (hit.collider != null)
         {
             Debug.Log("Ground detected below.");
             return true;
