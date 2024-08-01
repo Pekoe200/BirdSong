@@ -538,9 +538,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isGrounded
     m_EventTreshold: 0
-  - m_ConditionMode: 3
-    m_ConditionEvent: xVelocity
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2858318154321350667}
   m_Solo: 0
@@ -599,13 +596,13 @@ AnimatorStateMachine:
     m_Position: {x: 270, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4271760480566590874}
-    m_Position: {x: 320, y: -80, z: 0}
+    m_Position: {x: 290, y: -50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6465466258142511506}
     m_Position: {x: -100, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6290164088836859249}
-    m_Position: {x: 580, y: -130, z: 0}
+    m_Position: {x: 520, y: -110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 9001318640797584757}
     m_Position: {x: 120, y: -130, z: 0}

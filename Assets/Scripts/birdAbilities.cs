@@ -18,7 +18,8 @@ public class birdAbilities : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (((Input.GetKeyDown(KeyCode.A) && birdController.isFacingRight) || (Input.GetKeyDown(KeyCode.D) && !birdController.isFacingRight)) 
+                    && birdController.isGliding && !birdController.isStalling) {
             if (!animator.GetBool("isFlipping")) {
                 StartCoroutine(StartFlip());
             }

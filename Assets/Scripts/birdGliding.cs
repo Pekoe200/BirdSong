@@ -37,11 +37,11 @@ public class birdGliding : MonoBehaviour {
         float tiltInput = -Input.GetAxis("Vertical");
         if(birdController.isFacingRight)
         {
-            birdController.tiltAngle += tiltInput * Time.deltaTime * 100f;
+            birdController.tiltAngle += tiltInput * Time.deltaTime * 150f;
         }
         else
         {
-            birdController.tiltAngle -= tiltInput * Time.deltaTime * 100f;
+            birdController.tiltAngle -= tiltInput * Time.deltaTime * 150f;
         }
         
         birdController.tiltAngle = Mathf.Clamp(birdController.tiltAngle, -maxTiltAngle, maxTiltAngle);
@@ -89,7 +89,7 @@ public class birdGliding : MonoBehaviour {
             float glideDirection = birdController.isFacingRight ? 1 : -1;
             mRigidbody2D.velocity = transform.right * forwardSpeed * glideDirection;
 
-            // Debug.Log("Gliding. Tilt angle: " + birdController.tiltAngle + ", Speed: " + forwardSpeed);
+             Debug.Log("Gliding. Tilt angle: " + birdController.tiltAngle + ", Speed: " + forwardSpeed);
         }
     }
 
