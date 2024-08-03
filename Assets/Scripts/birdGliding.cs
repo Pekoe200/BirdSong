@@ -35,63 +35,62 @@ public class birdGliding : MonoBehaviour {
 
     public void HandleGliding() {
         float tiltInput = -Input.GetAxis("Vertical");
-        if(birdController.isFacingRight)
-        {
+        Debug.Log("Tilt input: " + tiltInput);
+
+        // Ensure tilt input is always processed
+        if (birdController.isFacingRight) {
             birdController.tiltAngle += tiltInput * Time.deltaTime * 150f;
-        }
-        else
-        {
+        } else {
             birdController.tiltAngle -= tiltInput * Time.deltaTime * 150f;
         }
-        
+
         birdController.tiltAngle = Mathf.Clamp(birdController.tiltAngle, -maxTiltAngle, maxTiltAngle);
-        mRigidbody2D.drag = 0;
-
         transform.rotation = Quaternion.Euler(0, 0, -birdController.tiltAngle);
-
         animator.SetFloat("tiltAngle", birdController.tiltAngle);
 
-        if (birdController.isStalling) {
-            HandleStalling();
-        } else {
-            float forwardSpeed = mRigidbody2D.velocity.magnitude;
+        // Only proceed with gliding adjustments if not grounded
+        if (!birdController.isGrounded) {
+            mRigidbody2D.drag = 0;
 
-            if (birdController.isFacingRight) {
-                if (birdController.tiltAngle > 8) {
-                    forwardSpeed += (birdController.tiltAngle / maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
-                    forwardSpeed = Mathf.Min(forwardSpeed, 40f);
-                } else if (birdController.tiltAngle < 8) {
-                    forwardSpeed -= (birdController.tiltAngle / -maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
-
-                    if (forwardSpeed <= initialGlideSpeed / 2) {
-                        EnterStall();
-                        return;
-                    }
-                } else {
-                    forwardSpeed = Mathf.Lerp(forwardSpeed, initialGlideSpeed, Time.deltaTime);
-                }
+            if (birdController.isStalling) {
+                HandleStalling();
             } else {
-                if (birdController.tiltAngle < -4) {
-                    forwardSpeed += (birdController.tiltAngle / -maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
-                    forwardSpeed = Mathf.Min(forwardSpeed, 40f);
-                } else if (birdController.tiltAngle > -8) {
-                    forwardSpeed -= (birdController.tiltAngle / maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
-
-                    if (forwardSpeed <= initialGlideSpeed / 2) {
-                        EnterStall();
-                        return;
+                float forwardSpeed = mRigidbody2D.velocity.magnitude;
+                if (birdController.isFacingRight) {
+                    if (birdController.tiltAngle > 8) {
+                        forwardSpeed += (birdController.tiltAngle / maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
+                        forwardSpeed = Mathf.Min(forwardSpeed, 40f);
+                    } else if (birdController.tiltAngle < 8) {
+                        forwardSpeed -= (birdController.tiltAngle / -maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
+                        if (forwardSpeed <= initialGlideSpeed / 2) {
+                            EnterStall();
+                            return;
+                        }
+                    } else {
+                        forwardSpeed = Mathf.Lerp(forwardSpeed, initialGlideSpeed, Time.deltaTime);
                     }
                 } else {
-                    forwardSpeed = Mathf.Lerp(forwardSpeed, initialGlideSpeed, Time.deltaTime);
+                    if (birdController.tiltAngle < -4) {
+                        forwardSpeed += (birdController.tiltAngle / -maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
+                        forwardSpeed = Mathf.Min(forwardSpeed, 40f);
+                    } else if (birdController.tiltAngle > -8) {
+                        forwardSpeed -= (birdController.tiltAngle / maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
+                        if (forwardSpeed <= initialGlideSpeed / 2) {
+                            EnterStall();
+                            return;
+                        }
+                    } else {
+                        forwardSpeed = Mathf.Lerp(forwardSpeed, initialGlideSpeed, Time.deltaTime);
+                    }
                 }
+
+                float glideDirection = birdController.isFacingRight ? 1 : -1;
+                mRigidbody2D.velocity = transform.right * forwardSpeed * glideDirection;
+                // Debug.Log("Gliding. Tilt angle: " + birdController.tiltAngle + ", Speed: " + forwardSpeed);
             }
-
-            float glideDirection = birdController.isFacingRight ? 1 : -1;
-            mRigidbody2D.velocity = transform.right * forwardSpeed * glideDirection;
-
-             Debug.Log("Gliding. Tilt angle: " + birdController.tiltAngle + ", Speed: " + forwardSpeed);
         }
     }
+
 
     void HandleStalling() {
         if ((birdController.tiltAngle >= 8 && birdController.isFacingRight) || (birdController.tiltAngle <= -8 && !birdController.isFacingRight)) {
