@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4880078398478495625}
   - component: {fileID: 7014236478278388005}
+  - component: {fileID: 5854718719788192796}
   m_Layer: 0
   m_Name: healFlower2 (2)
   m_TagString: Untagged
@@ -70,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1504087599
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 645e2fc1cb58faf43835f55489b94e11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -84,6 +85,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5854718719788192796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3965981409406606627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8b9d7fd20d449429a818a3865cb00b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staminaRestoreAmount: 10
 --- !u!1 &4732870096418694307
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,9 +171,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1213306585
-  m_SortingLayer: -1
-  m_SortingOrder: 0
+  m_SortingLayerID: 1504087599
+  m_SortingLayer: -3
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 0090fd0895e9c9643b5a9b02fdaffae3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -181,6 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8904689418881967202}
   - component: {fileID: 2045554428945176451}
+  - component: {fileID: 5396934204171266048}
   m_Layer: 0
   m_Name: healFlower2 (1)
   m_TagString: Untagged
@@ -241,8 +256,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1504087599
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 645e2fc1cb58faf43835f55489b94e11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -255,6 +270,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5396934204171266048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296638655501476873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8b9d7fd20d449429a818a3865cb00b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staminaRestoreAmount: 10
 --- !u!1 &7984447205484881511
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1993356674076204773}
   - component: {fileID: 7568080446960205832}
+  - component: {fileID: 7428328731602520593}
   m_Layer: 0
   m_Name: healFlower2
   m_TagString: Untagged
@@ -325,8 +354,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1504087599
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 645e2fc1cb58faf43835f55489b94e11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -339,3 +368,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7428328731602520593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7984447205484881511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8b9d7fd20d449429a818a3865cb00b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staminaRestoreAmount: 10
