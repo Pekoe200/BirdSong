@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3392090937697235180}
   - component: {fileID: -7695102545266690895}
   - component: {fileID: -8126927496827771336}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Obstacle Rock
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -22, y: 4, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.25}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2133267990644962336}
   m_Father: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 901157361
   m_SortingLayer: -5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300058, guid: f6a737996a4a842e58ba28428e71d711, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 39628864d0ab5fd4bad2eec9ff124e33, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,7 +159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2133267990644962336}
   - component: {fileID: 405897413315109963}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Asset4u_HD_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
