@@ -14,7 +14,7 @@ public class birdAbilities : MonoBehaviour {
     public float flipStamina = 3f;
     public float dashStamina = 5f;
     public float timeStamina = 10f;
-    public float speedBoostAmount = 5f;
+    public float speedBoostAmount = 10f;
 
     void Start() {
         birdController = GetComponentInParent<birdController>();
@@ -96,8 +96,7 @@ public class birdAbilities : MonoBehaviour {
     }
 
     private void ApplySpeedBoost() {
-        birdGliding.AddToForwardSpeed(speedBoostAmount);
+        birdGliding.ApplyBoost(speedBoostAmount);
         birdStamina.DecreaseStamina(dashStamina);
-        Debug.Log("Applied speed boost while gliding");
     }
 }
