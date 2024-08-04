@@ -35,7 +35,7 @@ public class birdWalking : MonoBehaviour {
         }
     }
 
-    void Flip()
+    public void Flip()
     {
         Vector3 currentScale = gameObject.transform.localScale;
         currentScale.x *= -1;

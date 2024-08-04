@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class birdGliding : MonoBehaviour {
     private birdController birdController;
+    private birdWalking birdWalking;
     private Rigidbody2D mRigidbody2D;
     private Animator animator;
 
@@ -13,11 +14,14 @@ public class birdGliding : MonoBehaviour {
     public float stallSpeed = 10f;
     public float maxTiltAngle = 30f;
     public float stallForwardSpeed = 5f;
+    public float boostStamina = 10f;
 
     private float forwardSpeed; // Make forwardSpeed a class-level variable
+    private float boostFactor = 1f;
 
     void Start() {
         birdController = GetComponent<birdController>();
+        birdWalking = GetComponent<birdWalking>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
         forwardSpeed = initialGlideSpeed; // Initialize forwardSpeed
@@ -27,8 +31,6 @@ public class birdGliding : MonoBehaviour {
         if (mRigidbody2D.velocity.y <= 0 && !birdController.isGliding && !birdController.isStalling) {
             if (birdController.hasJumped) {
                 birdController.isGliding = true;
-                forwardSpeed = initialGlideSpeed; // Set the initial glide speed
-                mRigidbody2D.velocity = transform.right * forwardSpeed;
                 Debug.Log("Entering glide state with initial speed.");
                 animator.SetBool("isGliding", true);
             } else {
@@ -56,8 +58,12 @@ public class birdGliding : MonoBehaviour {
             if (birdController.isStalling) {
                 HandleStalling();
             } else {
+                forwardSpeed = mRigidbody2D.velocity.magnitude;
                 if (birdController.isFacingRight) {
+                    
+                    forwardSpeed = mRigidbody2D.velocity.magnitude;
                     if (birdController.tiltAngle > 8) {
+                        birdController.hasJumped = false;
                         forwardSpeed += (birdController.tiltAngle / maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
                         forwardSpeed = Mathf.Min(forwardSpeed, 40f);
                     } else if (birdController.tiltAngle < 8) {
@@ -70,10 +76,11 @@ public class birdGliding : MonoBehaviour {
                         forwardSpeed = Mathf.Lerp(forwardSpeed, initialGlideSpeed, Time.deltaTime);
                     }
                 } else {
-                    if (birdController.tiltAngle < -4) {
+                    if (birdController.tiltAngle <= -8) {
+                        birdController.hasJumped = false;
                         forwardSpeed += (birdController.tiltAngle / -maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
                         forwardSpeed = Mathf.Min(forwardSpeed, 40f);
-                    } else if (birdController.tiltAngle > -8) {
+                    } else if (birdController.tiltAngle >= -8) {
                         forwardSpeed -= (birdController.tiltAngle / maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
                         if (forwardSpeed <= initialGlideSpeed / 2) {
                             EnterStall();
@@ -85,15 +92,16 @@ public class birdGliding : MonoBehaviour {
                 }
 
                 float glideDirection = birdController.isFacingRight ? 1 : -1;
-                mRigidbody2D.velocity = transform.right * forwardSpeed * glideDirection;
+                mRigidbody2D.velocity = transform.right * forwardSpeed * boostFactor * glideDirection;
+                // Reset boostFactor to 1 after applying
+                boostFactor = 1f;
             }
         }
     }
 
-    public void AddToForwardSpeed(float amount) {
-        forwardSpeed += amount;
-        forwardSpeed = Mathf.Max(forwardSpeed, 0); // Ensure forwardSpeed doesn't go below 0
-        forwardSpeed = Mathf.Min(forwardSpeed, 40f); // Ensure it doesn't go above 40 eithers
+    public void ApplyBoost(float boostAmount) {
+        boostFactor += boostAmount / forwardSpeed; // Adjust boostFactor based on boostAmount
+
     }
 
     void HandleStalling() {
@@ -104,7 +112,17 @@ public class birdGliding : MonoBehaviour {
             mRigidbody2D.gravityScale = 0;
             animator.SetBool("isGliding", true);
         } else {
-            mRigidbody2D.velocity = new Vector2(birdController.isFacingRight ? stallForwardSpeed : -stallForwardSpeed, mRigidbody2D.velocity.y);
+            if (!birdController.hasJumped) {
+                mRigidbody2D.velocity = new Vector2(birdController.isFacingRight ? stallForwardSpeed : -stallForwardSpeed, mRigidbody2D.velocity.y);
+            } else {
+                float move = Input.GetAxis("Horizontal");
+                Vector2 moveDirection = new Vector2(move, 0);
+                mRigidbody2D.velocity = new Vector2(moveDirection.x * 3f, mRigidbody2D.velocity.y);
+                if ((move > 0 && !birdController.isFacingRight) || (move < 0 && birdController.isFacingRight))
+                {
+                    birdWalking.Flip();
+                }
+            }
         }
     }
 
@@ -116,5 +134,9 @@ public class birdGliding : MonoBehaviour {
             animator.SetBool("isStalling", true);
             animator.SetBool("isGliding", false);
         }
+    }
+
+    public float GetForwardSpeed() {
+        return forwardSpeed;
     }
 }
