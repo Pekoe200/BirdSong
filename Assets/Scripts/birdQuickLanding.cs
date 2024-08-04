@@ -21,12 +21,14 @@ public class birdQuickLanding : MonoBehaviour {
         {
             QuickLand();
             animator.SetBool("isLanding", true);
+            animator.SetBool("isGliding", false);
             birdController.tiltAngle = 0f;
 
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             animator.SetBool("isLanding", false);
+            animator.SetBool("isGliding", true);
         }
     }
 

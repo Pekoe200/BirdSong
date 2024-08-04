@@ -41,6 +41,7 @@ public class birdController : MonoBehaviour {
             Debug.LogError("Rigidbody2D component missing from this game object");
         }
 
+        birdStamina birdStamina = GetComponent<birdStamina>();
         currentStamina = maxStamina;
         staminaSlider.maxValue = maxStamina;
         staminaSlider.value = currentStamina;
@@ -67,14 +68,13 @@ public class birdController : MonoBehaviour {
         UpdateStaminaUI();
     }
 
-    public void IncreaseStamina(float amount) {
-        currentStamina += amount;
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-        UpdateStaminaUI();
-    }
-
     public void UpdateStaminaUI() {
         staminaSlider.value = currentStamina;
+    }
+
+    public float GetForwardSpeed()
+    {
+        return mRigidbody2D.velocity.magnitude;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -113,7 +113,7 @@ public class birdController : MonoBehaviour {
             animator.SetBool("isGliding", false);
             isStalling = false;
             animator.SetBool("isStalling", false);
-            Debug.Log("Staying on ground.");
+            // Debug.Log("Staying on ground.");
         }
     }
 
@@ -124,7 +124,7 @@ public class birdController : MonoBehaviour {
             Debug.Log("Coroutine Stopped");
         }
         groundCheckCoroutine = StartCoroutine(CheckIfGroundedAfterDelay());
-        Debug.Log("Coroutine Started");
+        // Debug.Log("Coroutine Started");
     }
 
     private IEnumerator CheckIfGroundedAfterDelay() {

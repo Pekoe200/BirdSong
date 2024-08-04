@@ -14,17 +14,21 @@ public class birdGliding : MonoBehaviour {
     public float maxTiltAngle = 30f;
     public float stallForwardSpeed = 5f;
 
+    private float forwardSpeed; // Make forwardSpeed a class-level variable
+
     void Start() {
         birdController = GetComponent<birdController>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
+        forwardSpeed = initialGlideSpeed; // Initialize forwardSpeed
     }
 
     public void CheckForGlide() {
         if (mRigidbody2D.velocity.y <= 0 && !birdController.isGliding && !birdController.isStalling) {
             if (birdController.hasJumped) {
                 birdController.isGliding = true;
-                mRigidbody2D.velocity = transform.right * initialGlideSpeed;
+                forwardSpeed = initialGlideSpeed; // Set the initial glide speed
+                mRigidbody2D.velocity = transform.right * forwardSpeed;
                 Debug.Log("Entering glide state with initial speed.");
                 animator.SetBool("isGliding", true);
             } else {
@@ -35,9 +39,7 @@ public class birdGliding : MonoBehaviour {
 
     public void HandleGliding() {
         float tiltInput = -Input.GetAxis("Vertical");
-        Debug.Log("Tilt input: " + tiltInput);
 
-        // Ensure tilt input is always processed
         if (birdController.isFacingRight) {
             birdController.tiltAngle += tiltInput * Time.deltaTime * 150f;
         } else {
@@ -48,14 +50,12 @@ public class birdGliding : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0, 0, -birdController.tiltAngle);
         animator.SetFloat("tiltAngle", birdController.tiltAngle);
 
-        // Only proceed with gliding adjustments if not grounded
         if (!birdController.isGrounded) {
             mRigidbody2D.drag = 0;
 
             if (birdController.isStalling) {
                 HandleStalling();
             } else {
-                float forwardSpeed = mRigidbody2D.velocity.magnitude;
                 if (birdController.isFacingRight) {
                     if (birdController.tiltAngle > 8) {
                         forwardSpeed += (birdController.tiltAngle / maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
@@ -86,11 +86,15 @@ public class birdGliding : MonoBehaviour {
 
                 float glideDirection = birdController.isFacingRight ? 1 : -1;
                 mRigidbody2D.velocity = transform.right * forwardSpeed * glideDirection;
-                // Debug.Log("Gliding. Tilt angle: " + birdController.tiltAngle + ", Speed: " + forwardSpeed);
             }
         }
     }
 
+    public void AddToForwardSpeed(float amount) {
+        forwardSpeed += amount;
+        forwardSpeed = Mathf.Max(forwardSpeed, 0); // Ensure forwardSpeed doesn't go below 0
+        forwardSpeed = Mathf.Min(forwardSpeed, 40f); // Ensure it doesn't go above 40 eithers
+    }
 
     void HandleStalling() {
         if ((birdController.tiltAngle >= 8 && birdController.isFacingRight) || (birdController.tiltAngle <= -8 && !birdController.isFacingRight)) {
@@ -98,7 +102,6 @@ public class birdGliding : MonoBehaviour {
             animator.SetBool("isStalling", false);
             birdController.isGliding = true;
             mRigidbody2D.gravityScale = 0;
-            Debug.Log("Resuming glide state.");
             animator.SetBool("isGliding", true);
         } else {
             mRigidbody2D.velocity = new Vector2(birdController.isFacingRight ? stallForwardSpeed : -stallForwardSpeed, mRigidbody2D.velocity.y);
@@ -106,12 +109,10 @@ public class birdGliding : MonoBehaviour {
     }
 
     void EnterStall() {
-        if(!birdController.isFlipping)
-        {
+        if(!birdController.isFlipping) {
             birdController.isStalling = true;
             mRigidbody2D.gravityScale = 1;
             mRigidbody2D.drag = 60;
-            Debug.Log("Stalled. Falling.");
             animator.SetBool("isStalling", true);
             animator.SetBool("isGliding", false);
         }

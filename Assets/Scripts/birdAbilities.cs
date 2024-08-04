@@ -5,13 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class birdAbilities : MonoBehaviour {
     private birdController birdController;
+    private birdStamina birdStamina; // Updated to reference BirdStamina
+    private birdGliding birdGliding; // Reference to birdGliding
     private Rigidbody2D mRigidbody2D;
     private Animator animator;
     private float fixedDeltaTime;
     private Vector2 storedVelocity;
+    public float flipStamina = 3f;
+    public float dashStamina = 5f;
+    public float timeStamina = 10f;
+    public float speedBoostAmount = 5f;
 
     void Start() {
         birdController = GetComponentInParent<birdController>();
+        birdStamina = GetComponentInParent<birdStamina>(); // Updated to reference BirdStamina
+        birdGliding = GetComponentInParent<birdGliding>(); // Reference to birdGliding
         mRigidbody2D = GetComponentInParent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         this.fixedDeltaTime = Time.fixedDeltaTime;
@@ -32,6 +40,10 @@ public class birdAbilities : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.R)) {
             RestartScene();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space) && birdController.isGliding) {
+            ApplySpeedBoost();
+        }
     }
 
     private IEnumerator StartFlip() {
@@ -41,6 +53,9 @@ public class birdAbilities : MonoBehaviour {
         mRigidbody2D.gravityScale = 0;
         birdController.isFlipping = true;
         animator.SetBool("isFlipping", true);
+
+        // Penalize the bird for flipping
+        birdStamina.DecreaseStamina(flipStamina);
 
         yield return null; // Ensures the flip animation starts
     }
@@ -71,9 +86,18 @@ public class birdAbilities : MonoBehaviour {
         }
         // Adjust fixed delta time according to timescale
         Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
+
+        // Penalize the bird for toggling time scale
+        birdStamina.DecreaseStamina(timeStamina);
     }
 
     private void RestartScene() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void ApplySpeedBoost() {
+        birdGliding.AddToForwardSpeed(speedBoostAmount);
+        birdStamina.DecreaseStamina(dashStamina);
+        Debug.Log("Applied speed boost while gliding");
     }
 }

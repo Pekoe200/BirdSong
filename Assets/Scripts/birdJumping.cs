@@ -5,6 +5,7 @@ using UnityEngine;
 public class birdJumping : MonoBehaviour {
     private birdController birdController;
     private Rigidbody2D mRigidbody2D;
+    private birdStamina birdStamina;
     public float jumpForce = 5f;
     public float maxJumpForce = 30f;
     public float jumpChargeRate = 15f;
@@ -16,6 +17,7 @@ public class birdJumping : MonoBehaviour {
     void Start() {
         birdController = GetComponent<birdController>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
+        birdStamina = GetComponent<birdStamina>();
         currentJumpForce = jumpForce;
         animator = GetComponentInChildren<Animator>();
     }
@@ -36,8 +38,7 @@ public class birdJumping : MonoBehaviour {
                 currentJumpForce = Mathf.Clamp(currentJumpForce, jumpForce, maxJumpForce);
 
                 float staminaToDeplete = forceIncrease;
-                birdController.currentStamina -= staminaToDeplete;
-                birdController.currentStamina = Mathf.Clamp(birdController.currentStamina, 0, birdController.maxStamina);
+                birdStamina.DecreaseStamina(staminaToDeplete);
 
                 modCamera.Instance.ShakeCamera(currentJumpForce / maxJumpForce);
                 modCamera.Instance.ZoomCamera(currentJumpForce / maxJumpForce);
@@ -73,6 +74,6 @@ public class birdJumping : MonoBehaviour {
 
         mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, currentJumpForce);
         currentJumpForce = jumpForce;
-        chargeStarted = false; 
+        chargeStarted = false;
     }
 }

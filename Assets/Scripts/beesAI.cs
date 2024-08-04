@@ -4,24 +4,38 @@ using UnityEngine;
 
 public class beesAI : MonoBehaviour
 {
-    public float speed = 1.0f;
-    public GameObject target;
+    public float speed = 2.0f;
+    
     
     public int  maxCollisionsBeforeDeath = 2;
     public int damageDealt = 1;
-    public float lifeLength = 10.0f;
+    public float lifeLength = 60.0f;
 
-  
-    public float lastCollisionTime = 0.0f;
-    public int collisionFrames = 0;
-    private Rigidbody rigidBody;
+    private GameObject target;
+    private float lastCollisionTime = 0.0f;
+    private int collisionFrames = 0;
+ 
     
 
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
+        
+        //if we don't have a target look for the player
+        if(target == null)
+        {
+            target = GameObject.FindWithTag("Player");
+        }
+
+        //if we still don't have a target look for a bird
+
+        if(target == null)
+        {
+            target = GameObject.FindWithTag("Bird");
+        }
+
+
     }
 
     // Update is called once per frame
@@ -50,7 +64,7 @@ public class beesAI : MonoBehaviour
     
     }
 
-    void OnTriggerStay(Collider collider)
+    void OnCollisionStay2D(Collision2D collider)
     {
         //did we have a collision with the target?
         if(collider.gameObject == target)

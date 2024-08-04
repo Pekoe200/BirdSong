@@ -119,6 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdb462c3c75bb104a96b8a368bdef1ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flipStamina: 3
+  dashStamina: 5
+  timeStamina: 10
+  speedBoostAmount: 10
 --- !u!1 &6444917150745871874
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,6 +139,7 @@ GameObject:
   - component: {fileID: 1141033378644279729}
   - component: {fileID: 6144143717329702391}
   - component: {fileID: 5298749458927667526}
+  - component: {fileID: 2196197342752412010}
   m_Layer: 3
   m_Name: Birb
   m_TagString: Player
@@ -310,3 +315,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
+--- !u!114 &2196197342752412010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444917150745871874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f67779a9e3b38c4982970fa5f29f8d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

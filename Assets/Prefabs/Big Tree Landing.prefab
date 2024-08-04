@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4456486949030043193}
   - component: {fileID: 1659328168530596856}
+  - component: {fileID: 8577398334409322868}
   m_Layer: 0
   m_Name: Big Tree Landing
   m_TagString: Ground
@@ -85,6 +86,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8577398334409322868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3368655280427799785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de8713d720dce14499083d82e55e0c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beesPrefab: {fileID: 4084952226032180120, guid: 91659f5a2f3bfc447929162299e2ab30, type: 3}
 --- !u!1 &8812240870639730503
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,12 +109,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6841356139208898076}
   - component: {fileID: 8890971273438927272}
-  - component: {fileID: 1777304574770908935}
   - component: {fileID: 28926963171342036}
   - component: {fileID: 9059008659418291940}
   m_Layer: 6
   m_Name: leaves2
-  m_TagString: Ground
+  m_TagString: Foliage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,33 +185,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &1777304574770908935
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8812240870639730503}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!60 &28926963171342036
 PolygonCollider2D:
   m_ObjectHideFlags: 0
