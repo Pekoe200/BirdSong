@@ -7,6 +7,7 @@ public class birdGliding : MonoBehaviour {
     private birdWalking birdWalking;
     private Rigidbody2D mRigidbody2D;
     private Animator animator;
+    private TimeIndicator timeIndicator; // Reference to TimeIndicator
 
     public float initialGlideSpeed = 15;
     public float tiltDownSpeedIncrease = 30f;
@@ -24,6 +25,7 @@ public class birdGliding : MonoBehaviour {
         birdWalking = GetComponent<birdWalking>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
+        timeIndicator = FindObjectOfType<TimeIndicator>(); // Find the TimeIndicator in the scene
         forwardSpeed = initialGlideSpeed; // Initialize forwardSpeed
     }
 
@@ -42,10 +44,15 @@ public class birdGliding : MonoBehaviour {
     public void HandleGliding() {
         float tiltInput = -Input.GetAxis("Vertical");
 
+        float tiltSpeed = 150f;
+        if (timeIndicator != null && timeIndicator.IsTimeSlowed()) {
+            tiltSpeed /= timeIndicator.timeScale; // Adjust the tilt speed to counteract the slow time effect
+        }
+
         if (birdController.isFacingRight) {
-            birdController.tiltAngle += tiltInput * Time.deltaTime * 150f;
+            birdController.tiltAngle += tiltInput * Time.unscaledDeltaTime * tiltSpeed;
         } else {
-            birdController.tiltAngle -= tiltInput * Time.deltaTime * 150f;
+            birdController.tiltAngle -= tiltInput * Time.unscaledDeltaTime * tiltSpeed;
         }
 
         birdController.tiltAngle = Mathf.Clamp(birdController.tiltAngle, -maxTiltAngle, maxTiltAngle);
@@ -62,11 +69,11 @@ public class birdGliding : MonoBehaviour {
                 if (birdController.isFacingRight) {
                     
                     forwardSpeed = mRigidbody2D.velocity.magnitude;
-                    if (birdController.tiltAngle > 8) {
+                    if (birdController.tiltAngle > 4) {
                         birdController.hasJumped = false;
                         forwardSpeed += (birdController.tiltAngle / maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
                         forwardSpeed = Mathf.Min(forwardSpeed, 40f);
-                    } else if (birdController.tiltAngle < 8) {
+                    } else if (birdController.tiltAngle < 4) {
                         forwardSpeed -= (birdController.tiltAngle / -maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
                         if (forwardSpeed <= initialGlideSpeed / 2) {
                             EnterStall();
@@ -76,11 +83,11 @@ public class birdGliding : MonoBehaviour {
                         forwardSpeed = Mathf.Lerp(forwardSpeed, initialGlideSpeed, Time.deltaTime);
                     }
                 } else {
-                    if (birdController.tiltAngle <= -8) {
+                    if (birdController.tiltAngle <= -4) {
                         birdController.hasJumped = false;
                         forwardSpeed += (birdController.tiltAngle / -maxTiltAngle) * (tiltDownSpeedIncrease - initialGlideSpeed) * Time.deltaTime;
                         forwardSpeed = Mathf.Min(forwardSpeed, 40f);
-                    } else if (birdController.tiltAngle >= -8) {
+                    } else if (birdController.tiltAngle >= -4) {
                         forwardSpeed -= (birdController.tiltAngle / maxTiltAngle) * (initialGlideSpeed - (initialGlideSpeed / 2)) * 2 * Time.deltaTime;
                         if (forwardSpeed <= initialGlideSpeed / 2) {
                             EnterStall();
@@ -101,7 +108,6 @@ public class birdGliding : MonoBehaviour {
 
     public void ApplyBoost(float boostAmount) {
         boostFactor += boostAmount / forwardSpeed; // Adjust boostFactor based on boostAmount
-
     }
 
     void HandleStalling() {
@@ -118,6 +124,7 @@ public class birdGliding : MonoBehaviour {
                 float move = Input.GetAxis("Horizontal");
                 Vector2 moveDirection = new Vector2(move, 0);
                 mRigidbody2D.velocity = new Vector2(moveDirection.x * 3f, mRigidbody2D.velocity.y);
+                mRigidbody2D.gravityScale = .5f;
                 if ((move > 0 && !birdController.isFacingRight) || (move < 0 && birdController.isFacingRight))
                 {
                     birdWalking.Flip();

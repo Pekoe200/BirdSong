@@ -16,12 +16,17 @@ public class birdAbilities : MonoBehaviour {
     public float timeStamina = 10f;
     public float speedBoostAmount = 10f;
 
+    private BoostIndicator boostIndicator;
+    private TimeIndicator timeIndicator;
+
     void Start() {
         birdController = GetComponentInParent<birdController>();
         birdStamina = GetComponentInParent<birdStamina>(); // Updated to reference BirdStamina
         birdGliding = GetComponentInParent<birdGliding>(); // Reference to birdGliding
         mRigidbody2D = GetComponentInParent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        boostIndicator = FindObjectOfType<BoostIndicator>(); // Find the BoostIndicator in the scene
+        timeIndicator = FindObjectOfType<TimeIndicator>(); // Find the TimeIndicator in the scene
         this.fixedDeltaTime = Time.fixedDeltaTime;
     }
 
@@ -34,7 +39,7 @@ public class birdAbilities : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.T)) {
-            ToggleTimeScale();
+            ApplyTimeSlow();
         }
 
         if (Input.GetKeyDown(KeyCode.R)) {
@@ -78,17 +83,11 @@ public class birdAbilities : MonoBehaviour {
         mRigidbody2D.velocity = storedVelocity;
     }
 
-    private void ToggleTimeScale() {
-        if (Time.timeScale == 1.0f) {
-            Time.timeScale = 0.4f;
-        } else {
-            Time.timeScale = 1.0f;
+    private void ApplyTimeSlow() {
+        if (timeIndicator != null && timeIndicator.UseTimeAbility())
+        {
+            birdStamina.DecreaseStamina(timeStamina);
         }
-        // Adjust fixed delta time according to timescale
-        Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
-
-        // Penalize the bird for toggling time scale
-        birdStamina.DecreaseStamina(timeStamina);
     }
 
     private void RestartScene() {
@@ -96,7 +95,10 @@ public class birdAbilities : MonoBehaviour {
     }
 
     private void ApplySpeedBoost() {
-        birdGliding.ApplyBoost(speedBoostAmount);
-        birdStamina.DecreaseStamina(dashStamina);
+        if (boostIndicator != null && boostIndicator.UseBoost())
+        {
+            birdGliding.ApplyBoost(speedBoostAmount);
+            birdStamina.DecreaseStamina(dashStamina);
+        }
     }
 }

@@ -115,7 +115,7 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!1101 &-3594922038134845118
 AnimatorStateTransition:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

@@ -23,16 +23,16 @@ public class birdJumping : MonoBehaviour {
     }
 
     public void HandleJumping() {
-        if (Input.GetKeyDown(KeyCode.Space) && birdController.currentStamina > 0 && !chargeStarted) {
+        if (Input.GetKeyDown(KeyCode.Space) && birdController.currentStamina > 0 && !chargeStarted && birdController.isGrounded) {
             birdController.isCharging = true;
             animator.SetBool("isCharging", true);
-            birdController.shouldStayGrounded = false;
+            birdController.shouldStayGrounded = true; // Ensure the bird stays grounded
             chargeStarted = true;
+            mRigidbody2D.velocity = Vector2.zero; // Lock the bird's velocity
         }
 
         if (Input.GetKey(KeyCode.Space) && birdController.currentStamina > 0 && chargeStarted) {
             if (currentJumpForce < maxJumpForce) {
-                mRigidbody2D.velocity = new Vector2(0, 0);
                 float forceIncrease = jumpChargeRate * Time.deltaTime;
                 currentJumpForce += forceIncrease;
                 currentJumpForce = Mathf.Clamp(currentJumpForce, jumpForce, maxJumpForce);
