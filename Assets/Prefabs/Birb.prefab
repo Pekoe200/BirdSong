@@ -120,8 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flipStamina: 3
-  dashStamina: 5
-  timeStamina: 10
+  dashStamina: 15
+  timeStamina: 15
   speedBoostAmount: 10
 --- !u!1 &6444917150745871874
 GameObject:
@@ -274,6 +274,7 @@ MonoBehaviour:
   stallSpeed: 10
   maxTiltAngle: 30
   stallForwardSpeed: 5
+  boostStamina: 10
 --- !u!114 &1141033378644279729
 MonoBehaviour:
   m_ObjectHideFlags: 0
