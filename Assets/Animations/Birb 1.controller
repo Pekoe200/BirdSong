@@ -115,7 +115,7 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!1101 &-3594922038134845118
 AnimatorStateTransition:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -406,6 +406,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isLanding
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isGliding
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 9001318640797584757}
   m_Solo: 0
@@ -419,7 +422,7 @@ AnimatorStateTransition:
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0
 --- !u!1102 &4271760480566590874
 AnimatorState:
   serializedVersion: 6
@@ -538,9 +541,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isGrounded
     m_EventTreshold: 0
-  - m_ConditionMode: 3
-    m_ConditionEvent: xVelocity
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2858318154321350667}
   m_Solo: 0
@@ -599,13 +599,13 @@ AnimatorStateMachine:
     m_Position: {x: 270, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4271760480566590874}
-    m_Position: {x: 320, y: -80, z: 0}
+    m_Position: {x: 290, y: -50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6465466258142511506}
     m_Position: {x: -100, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6290164088836859249}
-    m_Position: {x: 580, y: -130, z: 0}
+    m_Position: {x: 520, y: -110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 9001318640797584757}
     m_Position: {x: 120, y: -130, z: 0}
@@ -672,6 +672,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: isStalling
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isGliding
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3294483587674906541}

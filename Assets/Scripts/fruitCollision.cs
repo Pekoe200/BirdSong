@@ -8,7 +8,7 @@ public class fruitCollision : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Player")) {
 
-            birdController bird = collision.GetComponent<birdController>();
+            birdStamina bird = collision.GetComponent<birdStamina>();
 
             if (bird != null) {
                 bird.IncreaseStamina(staminaRestoreAmount);

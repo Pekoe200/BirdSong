@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2223579164281948736}
   - component: {fileID: 1175365778872517661}
-  - component: {fileID: -8830846879737658171}
   m_Layer: 0
   m_Name: Road
   m_TagString: Ground
@@ -26,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6523556905517807449}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: -83.24, y: 4.69, z: 7.46}
-  m_LocalScale: {x: 30, y: 15, z: 1}
+  m_LocalScale: {x: 19, y: 15, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -90}
 --- !u!212 &1175365778872517661
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 274241331
   m_SortingLayer: -6
   m_SortingOrder: 2
-  m_Sprite: {fileID: 3181614506731337038, guid: 2529f58c0f0f4784d925363eac539680, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0908ad87921889544a024e2cd94f54d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,30 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &-8830846879737658171
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6523556905517807449}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0

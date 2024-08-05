@@ -10,6 +10,7 @@ TagManager:
   - Ground
   - LeftBoundary
   - RightBoundary
+  - Foliage
   layers:
   - Default
   - TransparentFX
