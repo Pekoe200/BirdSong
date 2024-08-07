@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3592485374547645906}
   - component: {fileID: 1872789781429056383}
   - component: {fileID: 6065925346643291620}
+  - component: {fileID: 4770929977917865390}
   m_Layer: 0
   m_Name: bees
   m_TagString: Untagged
@@ -137,3 +138,18 @@ CircleCollider2D:
   m_Offset: {x: -0.15905619, y: 0.29900247}
   serializedVersion: 2
   m_Radius: 5.446743
+--- !u!111 &4770929977917865390
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4084952226032180120}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 564bfdb2dfc00024b96dc71833b5f81d, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
