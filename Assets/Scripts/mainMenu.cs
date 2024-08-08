@@ -49,6 +49,6 @@ public class mainMenu : MonoBehaviour
     IEnumerator WaitCoroutine()
     {
         yield return new WaitForSecondsRealtime(1);
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync(0);
     }
 }
