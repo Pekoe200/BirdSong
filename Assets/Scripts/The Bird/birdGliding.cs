@@ -133,7 +133,7 @@ public class birdGliding : MonoBehaviour {
         }
     }
 
-    void EnterStall() {
+    public void EnterStall() {
         if(!birdController.isFlipping) {
             birdController.isStalling = true;
             mRigidbody2D.gravityScale = 1;

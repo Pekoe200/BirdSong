@@ -5,90 +5,80 @@ using UnityEngine;
 public class beesAI : MonoBehaviour
 {
     public float speed = 2.0f;
-    
-    
-    public int  maxCollisionsBeforeDeath = 2;
+    public int maxCollisionsBeforeDeath = 2;
     public int damageDealt = 1;
     public float lifeLength = 60.0f;
+    public float damageCooldown = 2.0f; // Cooldown time between damages
 
     private GameObject target;
-    private float lastCollisionTime = 0.0f;
-    private int collisionFrames = 0;
- 
-    
-
+    private float lastDamageTime = -Mathf.Infinity;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-        //if we don't have a target look for the player
-        if(target == null)
+        // If we don't have a target, look for the player
+        if (target == null)
         {
             target = GameObject.FindWithTag("Player");
         }
 
-        //if we still don't have a target look for a bird
-
-        if(target == null)
+        // If we still don't have a target, look for a bird
+        if (target == null)
         {
             target = GameObject.FindWithTag("Bird");
         }
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        
-
-        //reduce life by amount time has passed
+        // Reduce life by the amount of time that has passed
         lifeLength -= Time.deltaTime;
 
-        //did the bird run out of lifetime?
-        if(lifeLength <=0 )
+        // Did the bee run out of lifetime?
+        if (lifeLength <= 0)
         {
             Die();
         }
         else
         {
-            
-            //move towards the target
+            // Move towards the target
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
-            
-           
         }
-
-    
     }
 
-    void OnCollisionStay2D(Collision2D collider)
+    void OnTriggerEnter2D(Collider2D collider)
     {
-        //did we have a collision with the target?
-        if(collider.gameObject == target)
+        // Did we enter the trigger of the target?
+        if (collider.gameObject == target && Time.time - lastDamageTime >= damageCooldown)
         {
-            //is this the first time we've collided or has it been at least 1 second since we last collided?
-            if( (lastCollisionTime == 0.0) || ( (Time.time - lastCollisionTime) >=1.0 ))
-            {
-                maxCollisionsBeforeDeath--;
-                target.SendMessage("ApplyDamage",damageDealt,SendMessageOptions.DontRequireReceiver);
-                lastCollisionTime = Time.time;
-            }
-
-            if(maxCollisionsBeforeDeath <= 0)
-            {
-                Die();
-            }
+            ApplyCollisionEffect();
         }
-        collisionFrames++;
+    }
+
+    void OnTriggerStay2D(Collider2D collider)
+    {
+        if (collider.gameObject == target && Time.time - lastDamageTime >= damageCooldown)
+        {
+            ApplyCollisionEffect();
+        }
+    }
+
+    void ApplyCollisionEffect()
+    {
+        maxCollisionsBeforeDeath--;
+        target.SendMessage("ApplyDamage", damageDealt, SendMessageOptions.DontRequireReceiver);
+        lastDamageTime = Time.time; // Set the last damage time to now
+
+        if (maxCollisionsBeforeDeath <= 0)
+        {
+            Die();
+        }
     }
 
     void Die()
     {
-        GetComponent<Renderer>().material.SetColor("_Color",Color.red);
-        Destroy(gameObject,0.5f);
-
+        GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+        Destroy(gameObject, 0.5f);
     }
 }

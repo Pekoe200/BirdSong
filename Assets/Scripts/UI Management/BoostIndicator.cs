@@ -6,15 +6,24 @@ public class BoostIndicator : MonoBehaviour
     [SerializeField] private Image grayscaleImage; // The grayscale background image
     [SerializeField] private Image fullColorImage; // The full color foreground image
     [SerializeField] private float cooldownTime = 5f; // Time for the boost to recharge
+    [SerializeField] private AudioClip boostSound; // Sound effect for boosting
 
     private float cooldownTimer;
     private bool isBoostAvailable = true;
+    private AudioSource audioSource; // Audio source to play sound effects
 
     void Start()
     {
         if (grayscaleImage == null || fullColorImage == null)
         {
             Debug.LogError("Boost Indicator images not assigned!");
+        }
+
+        // Get the AudioSource component
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("No AudioSource component found on this GameObject.");
         }
 
         ResetBoostIndicator();
@@ -43,6 +52,13 @@ public class BoostIndicator : MonoBehaviour
             isBoostAvailable = false;
             cooldownTimer = 0f;
             fullColorImage.fillAmount = 0f;
+
+            // Play the boost sound effect
+            if (audioSource != null && boostSound != null)
+            {
+                audioSource.PlayOneShot(boostSound);
+            }
+
             // Add your boost logic here (e.g., Apply speed boost to the bird)
             return true;
         }
