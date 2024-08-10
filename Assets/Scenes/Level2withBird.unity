@@ -1777,6 +1777,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nest
       objectReference: {fileID: 0}
+    - target: {fileID: 2583059435954951159, guid: f23c2a3192fb5eb44b4dc2b81bc57f37, type: 3}
+      propertyPath: sceneNo
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2583059435954951159, guid: f23c2a3192fb5eb44b4dc2b81bc57f37, type: 3}
+      propertyPath: sceneName
+      value: Level3withBird
+      objectReference: {fileID: 0}
     - target: {fileID: 5167335575179153853, guid: f23c2a3192fb5eb44b4dc2b81bc57f37, type: 3}
       propertyPath: m_LocalPosition.x
       value: 330.3
@@ -2411,6 +2419,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nest (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2583059435954951159, guid: f23c2a3192fb5eb44b4dc2b81bc57f37, type: 3}
+      propertyPath: sceneNo
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2583059435954951159, guid: f23c2a3192fb5eb44b4dc2b81bc57f37, type: 3}
+      propertyPath: sceneName
+      value: Level3withBird
+      objectReference: {fileID: 0}
     - target: {fileID: 5167335575179153853, guid: f23c2a3192fb5eb44b4dc2b81bc57f37, type: 3}
       propertyPath: m_LocalPosition.x
       value: 332.59
@@ -2818,7 +2834,7 @@ Transform:
   m_GameObject: {fileID: 412774588}
   serializedVersion: 2
   m_LocalRotation: {x: -0.036300566, y: -0.00027253793, z: 0.0000136974395, w: -0.9993409}
-  m_LocalPosition: {x: -26.68, y: 32.58, z: -11}
+  m_LocalPosition: {x: -26.548, y: 31.847, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3957,6 +3973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneTransition: {fileID: 238722644}
   sceneName: Level3withBird
+  sceneNo: 2
 --- !u!1001 &592859306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6440,7 +6457,7 @@ Transform:
   m_GameObject: {fileID: 1021922456}
   serializedVersion: 2
   m_LocalRotation: {x: -0.036300566, y: -0.00027253793, z: 0.0000136974395, w: -0.9993409}
-  m_LocalPosition: {x: -26.68, y: 32.58, z: -11}
+  m_LocalPosition: {x: -26.548, y: 31.847, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7746,11 +7763,11 @@ PrefabInstance:
       objectReference: {fileID: 1089520251}
     - target: {fileID: 4195717069116317488, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -26.68
+      value: -26.548
       objectReference: {fileID: 0}
     - target: {fileID: 4195717069116317488, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 30.58
+      value: 29.847
       objectReference: {fileID: 0}
     - target: {fileID: 4195717069116317488, guid: d92787870fa09bc449a32b8a2e8a671c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8193,6 +8210,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2481579879114280596, guid: 2b5c771c97b007342b8f8c8ba4599a9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4354466578804230271, guid: 2b5c771c97b007342b8f8c8ba4599a9c, type: 3}
       propertyPath: m_Name
       value: enderTree
@@ -8413,6 +8434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneTransition: {fileID: 238722644}
   sceneName: Level3withBird
+  sceneNo: 2
 --- !u!1001 &1410734916
 PrefabInstance:
   m_ObjectHideFlags: 0
